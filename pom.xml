@@ -13,6 +13,7 @@
         <module>trace-collector-unit</module>
         <module>trace-collector-common</module>
         <module>trace-collector-ptrace-emulator</module>
+        <module>trace-collector-keeper-emulator</module>
   </modules>
 
     <dependencyManagement>

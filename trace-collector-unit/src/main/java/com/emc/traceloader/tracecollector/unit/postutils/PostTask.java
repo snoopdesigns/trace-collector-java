@@ -34,23 +34,24 @@ public class PostTask implements Runnable{
 
     @Override
     public void run(){
-        logger.info("Starting traces transmission. Postback URL: " + postbackURL + ", send interval: " + sendInterval);
+        logger.info("Starting traces transmission. Postback URL: " + postbackURL);
+        logger.info("Send interval: " + sendInterval);
+        logger.info("Log messages per HTTP message: " + logsPerMsg);
         int currentOffset = 0;
         while(true) {
             try {
                 if(currentOffset == 0) {
                     logger.info("Sending TRACES_SEND_BEGIN message...");
                     this.sendPostMessage(HTTPMsgUtils.createBeginMessage(data));
-                } else if(currentOffset > 0 && currentOffset <= data.size()) {
-                    logger.info("Sending TRACES_SEND_DATA message... Offset = " + currentOffset);
-                    if(currentOffset + logsPerMsg > data.size()) {
-                        logger.info("Sending data message...");
-                        this.sendPostMessage(HTTPMsgUtils.createDataMessage(data, currentOffset, data.size()));
-                    } else {
-                        this.sendPostMessage(HTTPMsgUtils.createDataMessage(data, currentOffset, currentOffset + logsPerMsg));
-                    }
-                    currentOffset += logsPerMsg;
-                } else if(currentOffset > data.size()) {
+                }
+                logger.info("Sending TRACES_SEND_DATA message... Offset = " + currentOffset);
+                if(currentOffset + logsPerMsg > data.size()) {
+                    this.sendPostMessage(HTTPMsgUtils.createDataMessage(data, currentOffset, data.size()));
+                } else {
+                    this.sendPostMessage(HTTPMsgUtils.createDataMessage(data, currentOffset, currentOffset + logsPerMsg));
+                }
+                currentOffset += logsPerMsg;
+                if(currentOffset > data.size()) {
                     logger.info("Sending TRACES_SEND_END message...");
                     this.sendPostMessage(HTTPMsgUtils.createEndMessage(data));
                     break;//end of sending data
