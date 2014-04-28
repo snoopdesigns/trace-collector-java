@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.emc.traceloader</groupId>
+    <artifactId>trace-collector-unit</artifactId>
+    <packaging>war</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>trace-collector-unit</name>
+
+    <parent>
+        <groupId>com.emc.traceloader</groupId>
+        <artifactId>traceloader-all</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.emc.traceloader</groupId>
+            <artifactId>trace-collector-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>executable-war</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <version>2.1</version>
+                        <executions>
+                            <execution>
+                                <id>tomcat-run</id>
+                                <goals>
+                                    <goal>exec-war-only</goal>
+                                </goals>
+                                <phase>package</phase>
+                                <configuration>
+                                    <path>/</path>
+                                    <attachArtifactClassifier>exec-war</attachArtifactClassifier>
+                                    <attachArtifactClassifierType>jar</attachArtifactClassifierType>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <build>
+        <finalName>trace-collector-unit</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
