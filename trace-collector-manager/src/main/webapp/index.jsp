@@ -15,9 +15,11 @@
     <%
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
         System.out.println("From jsp: " + dbUtils.getAllHosts());
-        dbUtils.addHost(new Host("10.100", "test"));
     %>
-    <table>
+
+    <h2>Hosts:</h2>
+
+    <table border="1" bgcolor="#ffcc00">
     <%  for(Host host : dbUtils.getAllHosts()) { %>
         <tr>
             <td><%=host.getIp()%></td>
@@ -25,7 +27,14 @@
         </tr>
     <%  }  %>
     </table>
+
     <body>
+        <td>
+            <input type="text" name="details" value="">
+        </td>
+        <td align="center">
+            <input type="button" name="choice" onclick="window.open('db.jsp','popuppage','width=200,toolbar=1,resizable=1,scrollbars=yes,height=150,top=100,left=100');" value="Add new host">
+        </td>
         <form action="/mgr">
             <table>
                 <tr>
