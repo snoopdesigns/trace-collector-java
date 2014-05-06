@@ -1,5 +1,6 @@
 package com.emc.traceloader;
 
+import com.emc.traceloader.db.DatabaseUtils;
 import com.emc.traceloader.entity.CmdEntity;
 import com.google.gson.Gson;
 
@@ -24,6 +25,11 @@ public class ManagerRequestProcessor extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        DatabaseUtils dbUtils =
+                (DatabaseUtils)getServletContext().getAttribute(DatabaseUtils.class.getName());
+        logger.info("Execute select: " + dbUtils.getAllHosts());
+
         logger.info("GET request received! PATH:" + request.getContextPath());
         if(!request.getParameterMap().isEmpty()) {
             logger.info("Parsing user request...");
