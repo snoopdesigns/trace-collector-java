@@ -3,12 +3,28 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Set"%>
+<%@page import="com.emc.traceloader.db.DatabaseUtils"%>
+<%@page import="com.emc.traceloader.db.entity.Host"%>
 <html>
     <head>
         <title>Trace Collector manager:</title>
         <meta http-equiv="content-type" content="text/html;charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     </head>
+
+    <%
+        DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
+        System.out.println("From jsp: " + dbUtils.getAllHosts());
+        dbUtils.addHost(new Host("10.100", "test"));
+    %>
+    <table>
+    <%  for(Host host : dbUtils.getAllHosts()) { %>
+        <tr>
+            <td><%=host.getIp()%></td>
+            <td><%=host.getPort()%></td>
+        </tr>
+    <%  }  %>
+    </table>
     <body>
         <form action="/mgr">
             <table>
