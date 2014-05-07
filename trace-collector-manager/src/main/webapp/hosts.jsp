@@ -15,13 +15,7 @@
 	</head>
 
     <%
-        boolean entryAddedSuccess = false;
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
-        Map req_params = request.getParameterMap();
-        if (req_params.size() > 1) {
-            dbUtils.addHost(new Host(request.getParameter("ip_address"), request.getParameter("port")));
-            entryAddedSuccess = true;
-        }
     %>
 
 	<body>
@@ -47,7 +41,7 @@
                                 <tr>
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>
-                                    <td>/unit</td>
+                                    <td><%=host.getUrlContext()%></td>
                                     <td><a href="#" class="edit">Edit</a></td>
                                     <td><a href="#" class="delete">Delete</a></td>
                                 </tr>
@@ -58,8 +52,7 @@
 			</div>
 		
 		<div id="foot">
-					<a href="#">Contact Me</a>
-				
+		    <a href="#">Contact Me</a>
 		</div>
 	</body>
 </html>

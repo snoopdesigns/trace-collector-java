@@ -19,7 +19,7 @@
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
         Map req_params = request.getParameterMap();
         if (req_params.size() > 1) {
-            dbUtils.addHost(new Host(request.getParameter("ip_address"), request.getParameter("port")));
+            dbUtils.addHost(new Host(request.getParameter("ip_address"), request.getParameter("port"), request.getParameter("url_context")));
             entryAddedSuccess = true;
         }
     %>

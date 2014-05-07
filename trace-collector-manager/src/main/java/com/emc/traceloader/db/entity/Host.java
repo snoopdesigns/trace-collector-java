@@ -9,21 +9,28 @@ import java.io.Serializable;
 public class Host implements Serializable{
 
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue
     private Long id;
-
     private String ip;
-
     private String port;
+    private String urlContext;
 
     public Host() {
     }
 
-    public Host(String ip, String port) {
+    public Host(String ip, String port, String urlContext) {
         this.ip = ip;
         this.port = port;
+        this.urlContext = urlContext;
+    }
+
+    public String getUrlContext() {
+        return urlContext;
+    }
+
+    public void setUrlContext(String urlContext) {
+        this.urlContext = urlContext;
     }
 
     public Long getId() {

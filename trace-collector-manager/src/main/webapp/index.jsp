@@ -119,6 +119,7 @@
                                 <tr>
                             	    <th>IP address</th>
                             		<th>Port</th>
+                            		<th>URL context</th>
                             	</tr>
                             </thead>
                             <tbody>
@@ -126,6 +127,7 @@
                                 <tr>
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>
+                                    <td><%=host.getUrlContext()%></td>
                                 </tr>
                             <%  }  %>
                             </tbody>
