@@ -5,68 +5,116 @@
 <%@page import="java.util.Set"%>
 <%@page import="com.emc.traceloader.db.DatabaseUtils"%>
 <%@page import="com.emc.traceloader.db.entity.Host"%>
-<html>
-    <head>
-        <title>Trace Collector manager:</title>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-    </head>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<title>Trace Collector Manager</title>
+		<link rel="stylesheet" href="css/960.css" type="text/css" media="screen" charset="utf-8" />
+		<link rel="stylesheet" href="css/template.css" type="text/css" media="screen" charset="utf-8" />
+		<link rel="stylesheet" href="css/colour.css" type="text/css" media="screen" charset="utf-8" />
+		<script src="js/glow/1.7.0/core/core.js" type="text/javascript"></script>
+		<script src="js/glow/1.7.0/widgets/widgets.js" type="text/javascript"></script>
+		<link href="js/glow/1.7.0/widgets/widgets.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript">
+			glow.ready(function(){
+				new glow.widgets.Sortable(
+					'#content .grid_5, #content .grid_6, #content .grid_11',
+					{
+						draggableOptions : {
+							handle : 'h2'
+						}
+					}
+				);
+			});
+		</script>
+	</head>
 
-    <%
+	<%
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
-        System.out.println("From jsp: " + dbUtils.getAllHosts());
     %>
 
-    <h2>Hosts:</h2>
+	<body>
 
-    <table border="1" bgcolor="#ffcc00">
-    <%  for(Host host : dbUtils.getAllHosts()) { %>
-        <tr>
-            <td><%=host.getIp()%></td>
-            <td><%=host.getPort()%></td>
-        </tr>
-    <%  }  %>
-    </table>
+		<h1 id="head">Trace Collector Manager Application</h1>
+		
+		<ul id="navigation">
+			<li><span class="active">Main</span></li>
+			<li><a href="hosts.jsp">Hosts</a></li>
+			<li><a href="add_host.jsp">Add new host</a></li>
+		</ul>
 
-    <body>
-        <td>
-            <input type="text" name="details" value="">
-        </td>
-        <td align="center">
-            <input type="button" name="choice" onclick="window.open('db.jsp','popuppage','width=200,toolbar=1,resizable=1,scrollbars=yes,height=150,top=100,left=100');" value="Add new host">
-        </td>
-        <form action="/mgr">
-            <table>
-                <tr>
-                    <td>SEND_ADDRESS</td>
-                    <td><input name="send_address" value="http://localhost:8080/unit"></td>
-                </tr>
-                <tr>
-                    <td>CMD_TYPE</td>
-                    <td><input name="cmd_type" value="START_COLLECTING"></td>
-                </tr>
-                <tr>
-                     <td>SEND_POLITIC:</td>
-                     <td><input name="send_politic" value="SEND_ON_END"></td>
-                </tr>
-                <tr>
-                     <td>LOG_ENTITY_PER_MSG:</td>
-                     <td><input name="log_entity_per_msg" value="100"></td>
-                </tr>
-                <tr>
-                     <td>SEND_INTERVAL:</td>
-                     <td><input name="send_interval" value="1000"></td>
-                </tr>
-                <tr>
-                     <td>POSTBACK_IP:</td>
-                     <td><input name="postback_ip" value="http://localhost:8080/unit"></td>
-                </tr>
-                <tr>
-                     <td>REQUESTED_LUNS:</td>
-                     <td><input name="requested_luns" value="1,2,3"></td>
-                </tr>
-            </table>
-            <input type="submit" value="Save" title="Save" class="button" />
-        </form>
-    </body>
+			<div id="content" class="container_16 clearfix">
+				<div class="grid_5">
+					<div class="box">
+						<h2>Elizaveta</h2>
+						<div class="utils">
+							<a href="#">View More</a>
+						</div>
+						<p><strong>Last Signed In : </strong> Wed 11 Nov, 7:31<br /><strong>IP Address : </strong> 192.168.1.101</p>
+					</div>
+					<div class="box">
+						<h2>System Status</h2>
+						<div class="utils">
+							<a href="#">View More</a>
+						</div>
+						<p class="center">OPERATIONAL</p>
+					</div>
+                    <div class="box">
+                        <h2>Controls</h2>
+                        <div class="utils">
+                            <a href="#">Advanced</a>
+                        </div>
+                        <form action="#" method="post">
+                            <p>
+                                <label for="title">Send politic</label>
+                                <input type="text" name="send_politic" />
+                            </p>
+                            <p>
+                                <label for="post">Send interval</label>
+                                <textarea name="send_interval"></textarea>
+                            </p>
+                            <p>
+                                <input type="submit" value="Start" />
+                                <input type="submit" value="Stop" />
+                                <input type="submit" value="Send" />
+                            </p>
+                        </form>
+                    </div>
+				</div>
+				<div class="grid_11">
+                    <div class="box">
+                        <h2>Hosts</h2>
+                        <div class="utils">
+                            <a href="#">View More</a>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                            	    <th>IP address</th>
+                            		<th>Port</th>
+                            	</tr>
+                            </thead>
+                            <tbody>
+                            <%  for(Host host : dbUtils.getAllHosts()) { %>
+                                <tr>
+                                    <td><%=host.getIp()%></td>
+                                    <td><%=host.getPort()%></td>
+                                </tr>
+                            <%  }  %>
+                            </tbody>
+                        </table>
+                        <form action="add_host.jsp">
+                            <input type="submit" value="Add new" />
+                        </form>
+                    </div>
+				</div>
+			</div>
+		<div id="foot">
+			<div class="container_16 clearfix">
+				<div class="grid_16">
+					<a href="#">Contact Me</a>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
