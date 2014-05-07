@@ -32,7 +32,7 @@ public class ManagerRequestProcessor extends HttpServlet {
 
         logger.info("GET request received! PATH:" + request.getContextPath());
         if(!request.getParameterMap().isEmpty()) {
-            logger.info("Parsing user request...");
+            logger.info("Parsing user request..." + request.getQueryString() + ", " + request.getContextPath());
             CmdEntity cmd = controller.parseUIRequest(request);
             logger.info("Sending command: " + cmd + " to URL: " + request.getParameter("send_address"));
             controller.sendCommand(cmd, new URL(request.getParameter("send_address")));
