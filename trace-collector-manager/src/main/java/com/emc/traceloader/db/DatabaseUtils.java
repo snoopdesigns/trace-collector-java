@@ -45,7 +45,6 @@ public class DatabaseUtils {
         try {
             User user  = (User)em.find(User.class, this.getUserIdByLogin(userLogin));
             em.getTransaction().begin();
-            System.out.println("user login : " + user.getLogin());
             user.addNewHost(host);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -89,7 +88,6 @@ public class DatabaseUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("User: " + userLogin + ", ID = " + result);
         return result;
     }
 }
