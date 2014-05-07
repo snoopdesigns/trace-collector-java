@@ -35,10 +35,12 @@ public class CDBLogFileParser {
         if(cdbString.length() == 20) {  //20x 16hex symbols
             String op_code = cdbString.substring(0,2);
             String op_address = cdbString.substring(4,12);
+            String transfer_length = cdbString.substring(14,18);
             result.setDatetime(datetime);
             result.setDevice_id(deviceId);
             result.setOp_address(op_address);
             result.setOp_code(op_code);
+            result.setTransfer_length(transfer_length);
         }
         return result;
     }

@@ -5,9 +5,18 @@ public class LogEntity {
     private String op_code;
     private String device_id;
     private String op_address;
+    private String transfer_length;
     private String datetime;
 
     public LogEntity() {
+    }
+
+    public String getTransfer_length() {
+        return transfer_length;
+    }
+
+    public void setTransfer_length(String transfer_length) {
+        this.transfer_length = transfer_length;
     }
 
     public String getOp_code() {
