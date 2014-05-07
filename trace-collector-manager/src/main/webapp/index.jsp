@@ -40,6 +40,7 @@
             xmlHttp.open( "GET", "/mgr?cmd_type=START_COLLECTING&postback_ip="+postback_ip+"&send_interval="+send_interval+
                 "&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3&send_address="+send_address, false );
             xmlHttp.send( null );
+            document.getElementById("success_msg").innerHTML = '<p class="success">START command success</p>';
         }
     </script>
 
@@ -78,7 +79,9 @@
                         <div class="utils">
                             <a href="#">Advanced</a>
                         </div>
-                        <form action="#" method="post">
+                        <div id="success_msg">
+                            <!--<p class="success">New host successfully added.</p>-->
+                        </div>
                             <p>
                                 <label for="title">Send politic</label>
                                 <select id="send_politic">
@@ -103,7 +106,6 @@
                                 <input type="submit" value="Stop" />
                                 <input type="submit" value="Send" />
                             </p>
-                        </form>
                     </div>
 				</div>
 				<div class="grid_11">
