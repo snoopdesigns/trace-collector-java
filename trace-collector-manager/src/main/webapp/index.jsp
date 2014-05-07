@@ -57,6 +57,7 @@
 	<%
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
         String session_id = (String)session.getAttribute(SessionParameters.SESSION_ID_PARAM);
+        String user_id = (String)session.getAttribute(SessionParameters.USER_ID_PARAM);
         if(null == session_id) {
             response.sendRedirect("login.jsp");
         }
@@ -75,7 +76,7 @@
 			<div id="content" class="container_16 clearfix">
 				<div class="grid_5">
 					<div class="box">
-						<h2><%=(String)session.getAttribute(SessionParameters.USER_ID_PARAM)%></h2>
+						<h2><%=user_id%></h2>
 						<div class="utils">
 							<a href="/auth?logout">Logout</a>
 						</div>
@@ -129,7 +130,7 @@
                             	</tr>
                             </thead>
                             <tbody>
-                            <%  for(Host host : dbUtils.getAllHosts()) { %>
+                            <%  for(Host host : dbUtils.getAllHosts(user_id)) { %>
                                 <tr>
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>

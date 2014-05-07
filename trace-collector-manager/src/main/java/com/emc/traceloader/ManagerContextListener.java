@@ -11,7 +11,7 @@ import javax.servlet.ServletContextListener;
 public class ManagerContextListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent e) {
-        com.objectdb.Enhancer.enhance("com.emc.traceloader.db.entity.*");
+        com.objectdb.Enhancer.enhance("com.emc.traceloader.db.entity.User");
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("$objectdb/db/manager.odb");
         DatabaseUtils dbUtils = new DatabaseUtils(emf);

@@ -16,16 +16,17 @@
 	</head>
 
     <%
+        String session_id = (String)session.getAttribute(SessionParameters.SESSION_ID_PARAM);
+        String user_id = (String)session.getAttribute(SessionParameters.USER_ID_PARAM);
+        if(null == session_id) {
+            response.sendRedirect("login.jsp");
+        }
         boolean entryAddedSuccess = false;
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
         Map req_params = request.getParameterMap();
         if (req_params.size() > 1) {
-            dbUtils.addHost(new Host(request.getParameter("ip_address"), request.getParameter("port"), request.getParameter("url_context")));
+            dbUtils.addHost(new Host(request.getParameter("ip_address"), request.getParameter("port"), request.getParameter("url_context")), user_id);
             entryAddedSuccess = true;
-        }
-        String session_id = (String)session.getAttribute(SessionParameters.SESSION_ID_PARAM);
-        if(null == session_id) {
-            response.sendRedirect("login.jsp");
         }
     %>
 

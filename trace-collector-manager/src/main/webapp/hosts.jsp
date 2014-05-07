@@ -18,6 +18,7 @@
     <%
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
         String session_id = (String)session.getAttribute(SessionParameters.SESSION_ID_PARAM);
+        String user_id = (String)session.getAttribute(SessionParameters.USER_ID_PARAM);
         if(null == session_id) {
             response.sendRedirect("login.jsp");
         }
@@ -42,7 +43,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						    <%  for(Host host : dbUtils.getAllHosts()) { %>
+						    <%  for(Host host : dbUtils.getAllHosts(user_id)) { %>
                                 <tr>
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>
