@@ -1,21 +1,21 @@
-package com.emc.traceloader.entity;
+package com.emc.traceloader.keeper.api;
 
 import java.util.Collection;
 
 public class MsgEntity {
 
-    private Constants.DataCmdType msg_type;
+    private DataCmdType msg_type;
     private Integer data_total;
     private Collection<LogEntity> data;
 
     public MsgEntity() {
     }
 
-    public Constants.DataCmdType getMsg_type() {
+    public DataCmdType getMsg_type() {
         return msg_type;
     }
 
-    public void setMsg_type(Constants.DataCmdType msg_type) {
+    public void setMsg_type(DataCmdType msg_type) {
         this.msg_type = msg_type;
     }
 

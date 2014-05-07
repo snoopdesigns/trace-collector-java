@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-collector-common</artifactId>
+            <artifactId>trace-collector-keeper-api</artifactId>
         </dependency>
     </dependencies>
 

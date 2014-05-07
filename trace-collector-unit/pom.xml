@@ -27,7 +27,11 @@
         </dependency>
         <dependency>
             <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-collector-common</artifactId>
+            <artifactId>trace-collector-unit-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.emc.traceloader</groupId>
+            <artifactId>trace-collector-keeper-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

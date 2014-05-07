@@ -1,7 +1,8 @@
 package com.emc.traceloader;
 
-import com.emc.traceloader.entity.CmdEntity;
-import com.emc.traceloader.entity.Constants;
+import com.emc.traceloader.unit.api.CmdEntity;
+import com.emc.traceloader.unit.api.ControlCmdType;
+import com.emc.traceloader.unit.api.Politics;
 import com.google.gson.Gson;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -38,8 +39,8 @@ public class ManagerController {
                 request.getParameter(PARAM_REQUESTED_LUNS) != null &&
                 request.getParameter(PARAM_SEND_INTERVAL) != null &&
                 request.getParameter(PARAM_SEND_POLITIC) != null) {
-            cmd.setCmd_type(Constants.ControlCmdType.valueOf(request.getParameter(PARAM_CMD_TYPE)));
-            cmd.setSend_politic(Constants.Politics.valueOf(request.getParameter(PARAM_SEND_POLITIC)));
+            cmd.setCmd_type(ControlCmdType.valueOf(request.getParameter(PARAM_CMD_TYPE)));
+            cmd.setSend_politic(Politics.valueOf(request.getParameter(PARAM_SEND_POLITIC)));
             cmd.setLog_entity_per_msg(Integer.valueOf(request.getParameter(PARAM_LOG_ENTITY_PER_MSG)));
             cmd.setSend_interval(Integer.valueOf(request.getParameter(PARAM_SEND_INTERVAL)));
             cmd.setPostback_ip(request.getParameter(PARAM_POSTBACK_IP));

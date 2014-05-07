@@ -1,4 +1,4 @@
-package com.emc.traceloader.entity;
+package com.emc.traceloader.keeper.api;
 
 public class LogEntity {
 

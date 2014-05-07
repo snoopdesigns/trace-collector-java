@@ -1,7 +1,7 @@
 package com.emc.traceloader;
 
 import com.emc.traceloader.db.DatabaseUtils;
-import com.emc.traceloader.entity.CmdEntity;
+import com.emc.traceloader.unit.api.CmdEntity;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;

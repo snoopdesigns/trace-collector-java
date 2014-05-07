@@ -1,6 +1,6 @@
 package com.emc.traceloader.tracecollector.unit.fileutils;
 
-import com.emc.traceloader.entity.LogEntity;
+import com.emc.traceloader.keeper.api.LogEntity;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

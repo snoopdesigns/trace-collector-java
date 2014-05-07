@@ -1,6 +1,6 @@
 package com.emc.traceloader.tracecollector.keeper;
 
-import com.emc.traceloader.entity.MsgEntity;
+import com.emc.traceloader.keeper.api.MsgEntity;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;

@@ -1,11 +1,11 @@
-package com.emc.traceloader.entity;
+package com.emc.traceloader.unit.api;
 
 import java.util.Collection;
 
 public class CmdEntity {
 
-    private Constants.ControlCmdType cmd_type;
-    private Constants.Politics send_politic;
+    private ControlCmdType cmd_type;
+    private Politics send_politic;
     private Integer log_entity_per_msg;
     private Integer send_interval;
     private String postback_ip;
@@ -14,19 +14,19 @@ public class CmdEntity {
     public CmdEntity() {
     }
 
-    public Constants.ControlCmdType getCmd_type() {
+    public ControlCmdType getCmd_type() {
         return cmd_type;
     }
 
-    public void setCmd_type(Constants.ControlCmdType cmd_type) {
+    public void setCmd_type(ControlCmdType cmd_type) {
         this.cmd_type = cmd_type;
     }
 
-    public Constants.Politics getSend_politic() {
+    public Politics getSend_politic() {
         return send_politic;
     }
 
-    public void setSend_politic(Constants.Politics send_politic) {
+    public void setSend_politic(Politics send_politic) {
         this.send_politic = send_politic;
     }
 

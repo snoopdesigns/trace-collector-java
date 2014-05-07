@@ -36,7 +36,12 @@
             </dependency>
             <dependency>
                 <groupId>com.emc.traceloader</groupId>
-                <artifactId>trace-collector-common</artifactId>
+                <artifactId>trace-collector-keeper-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.emc.traceloader</groupId>
+                <artifactId>trace-collector-unit-api</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
