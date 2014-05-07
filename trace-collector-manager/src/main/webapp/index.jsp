@@ -41,6 +41,18 @@
             xmlHttp.send( null );
             document.getElementById("success_msg").innerHTML = '<p class="success">START command success</p>';
         }
+
+        function sendCmd() {
+            var postback_ip = document.getElementById("postback_ip").value;
+            var send_politic = document.getElementById("send_politic").value;
+            var send_interval = document.getElementById("send_interval").value;
+            var xmlHttp = null;
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "/mgr?cmd_type=SEND&postback_ip="+postback_ip+"&send_interval="+send_interval+
+                "&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false );
+            xmlHttp.send( null );
+            document.getElementById("success_msg").innerHTML = '<p class="success">SEND command success</p>';
+        }
     </script>
 
 	<%
@@ -99,7 +111,7 @@
                             <p>
                                 <input type="submit" value="Start" onclick="startCollectingCmd()"/>
                                 <input type="submit" value="Stop" />
-                                <input type="submit" value="Send" />
+                                <input type="submit" value="Send" onclick="sendCmd()"/>
                             </p>
                     </div>
 				</div>
