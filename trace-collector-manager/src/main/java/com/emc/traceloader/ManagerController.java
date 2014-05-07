@@ -1,16 +1,19 @@
 package com.emc.traceloader;
 
+import com.emc.traceloader.httputils.HttpUtils;
 import com.emc.traceloader.unit.api.CmdEntity;
 import com.emc.traceloader.unit.api.ControlCmdType;
 import com.emc.traceloader.unit.api.Politics;
 import com.google.gson.Gson;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
+import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URL;
@@ -28,8 +31,6 @@ public class ManagerController {
     private static final String PARAM_SEND_INTERVAL = "send_interval";
     private static final String PARAM_POSTBACK_IP = "postback_ip";
     private static final String PARAM_REQUESTED_LUNS = "requested_luns"; //comma separated data
-
-    private Gson gson = new Gson();
 
     public CmdEntity parseUIRequest(HttpServletRequest request) {
         CmdEntity cmd = new CmdEntity();
@@ -50,30 +51,7 @@ public class ManagerController {
         return cmd;
     }
 
-    public void sendCommand(CmdEntity cmd, URL url) {
-        try {
-            HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(url.toURI());
-            post.setEntity(new StringEntity(gson.toJson(cmd)));
-            post.setHeader(new Header() {
-                @Override
-                public String getName() {return "Content-type";}
-                @Override
-                public String getValue() {return "application/json";}
-                @Override
-                public HeaderElement[] getElements() throws ParseException {return new HeaderElement[0];}
-            });
-            post.setHeader(new Header() {
-                @Override
-                public String getName() {return "Accept";}
-                @Override
-                public String getValue() {return "application/json";}
-                @Override
-                public HeaderElement[] getElements() throws ParseException {return new HeaderElement[0];}
-            });
-            client.execute(post);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void sendCommand(CmdEntity cmd, List<URL> urls) {
+        HttpUtils.sendCommand(cmd, urls);
     }
 }

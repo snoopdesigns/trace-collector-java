@@ -34,11 +34,10 @@
             var postback_ip = document.getElementById("postback_ip").value;
             var send_politic = document.getElementById("send_politic").value;
             var send_interval = document.getElementById("send_interval").value;
-            var send_address = document.getElementById("send_address").value;
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
             xmlHttp.open( "GET", "/mgr?cmd_type=START_COLLECTING&postback_ip="+postback_ip+"&send_interval="+send_interval+
-                "&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3&send_address="+send_address, false );
+                "&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false );
             xmlHttp.send( null );
             document.getElementById("success_msg").innerHTML = '<p class="success">START command success</p>';
         }
@@ -96,10 +95,6 @@
                             <p>
                                 <label for="post">Postback IP</label>
                                 <input id="postback_ip" type="text" name="postback_ip" />
-                            </p>
-                            <p>
-                                <label for="post">UNIT address</label>
-                                <input id="send_address" type="text" name="send_address" />
                             </p>
                             <p>
                                 <input type="submit" value="Start" onclick="startCollectingCmd()"/>

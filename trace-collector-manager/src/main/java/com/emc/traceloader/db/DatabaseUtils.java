@@ -1,9 +1,12 @@
 package com.emc.traceloader.db;
 
 import com.emc.traceloader.db.entity.Host;
+import com.emc.traceloader.httputils.HttpUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,4 +43,18 @@ public class DatabaseUtils {
             e.printStackTrace();
         }
     }
+
+    public List<URL> getHostsURLs() {
+        List<URL> result = new ArrayList<URL>();
+        try {
+        for(Host host : this.getAllHosts()) {
+            result.add(new URL(HttpUtils.buildURL(host)));
+        }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
 }

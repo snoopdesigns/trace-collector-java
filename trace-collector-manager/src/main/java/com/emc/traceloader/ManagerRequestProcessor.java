@@ -31,12 +31,10 @@ public class ManagerRequestProcessor extends HttpServlet {
 
         logger.info("GET request received! PATH:" + request.getContextPath());
         if(!request.getParameterMap().isEmpty()) {
-            logger.info("Parsing user request..." + request.getQueryString() + ", " + request.getContextPath());
+            logger.info("Parsing user request...");
             CmdEntity cmd = controller.parseUIRequest(request);
-            logger.info("Sending command: " + cmd + " to URL: " + request.getParameter("send_address"));
-            controller.sendCommand(cmd, new URL(request.getParameter("send_address")));
+            controller.sendCommand(cmd, dbUtils.getHostsURLs());
         }
-        logger.info("Processing index.jsp...");
         request.getRequestDispatcher("").forward(request, response); //process jsp page
     }
 }
