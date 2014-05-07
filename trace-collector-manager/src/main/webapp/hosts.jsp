@@ -29,7 +29,7 @@
         <ul id="navigation">
         	<li><a href="index.jsp">Main</a></li>
             <li><span class="active">Hosts</span></li>
-            <li><a href="hosts.jsp">Add new host</a></li>
+            <li><a href="add_host.jsp">Add new host</a></li>
         </ul>
 			<div id="content" class="container_16 clearfix">
 				<div class="grid_16">
