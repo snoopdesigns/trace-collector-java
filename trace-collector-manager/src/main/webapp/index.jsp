@@ -5,6 +5,7 @@
 <%@page import="java.util.Set"%>
 <%@page import="com.emc.traceloader.db.DatabaseUtils"%>
 <%@page import="com.emc.traceloader.db.entity.Host"%>
+<%@page import="com.emc.traceloader.auth.SessionParameters"%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -31,25 +32,23 @@
 
     <script>
         function startCollectingCmd() {
-            var postback_ip = document.getElementById("postback_ip").value;
             var send_politic = document.getElementById("send_politic").value;
             var send_interval = document.getElementById("send_interval").value;
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", "/mgr?cmd_type=START_COLLECTING&postback_ip="+postback_ip+"&send_interval="+send_interval+
-                "&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false );
+            xmlHttp.open( "GET", "/mgr?cmd_type=START_COLLECTING&postback_ip=<%=(String)session.getAttribute(SessionParameters.KEEPER_URL_PARAM)%>&send_interval="+
+                send_interval+"&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false);
             xmlHttp.send( null );
             document.getElementById("success_msg").innerHTML = '<p class="success">START command success</p>';
         }
 
         function sendCmd() {
-            var postback_ip = document.getElementById("postback_ip").value;
             var send_politic = document.getElementById("send_politic").value;
             var send_interval = document.getElementById("send_interval").value;
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", "/mgr?cmd_type=SEND&postback_ip="+postback_ip+"&send_interval="+send_interval+
-                "&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false );
+            xmlHttp.open( "GET", "/mgr?cmd_type=SEND&postback_ip=<%=(String)session.getAttribute(SessionParameters.KEEPER_URL_PARAM)%>&send_interval="+
+            send_interval+"&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false);
             xmlHttp.send( null );
             document.getElementById("success_msg").innerHTML = '<p class="success">SEND command success</p>';
         }
@@ -57,7 +56,7 @@
 
 	<%
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
-        String session_id = (String)session.getAttribute("TL_SESSION_ID");
+        String session_id = (String)session.getAttribute(SessionParameters.SESSION_ID_PARAM);
         if(null == session_id) {
             response.sendRedirect("login.jsp");
         }
@@ -76,7 +75,7 @@
 			<div id="content" class="container_16 clearfix">
 				<div class="grid_5">
 					<div class="box">
-						<h2><%=(String)session.getAttribute("TL_USER_ID")%></h2>
+						<h2><%=(String)session.getAttribute(SessionParameters.USER_ID_PARAM)%></h2>
 						<div class="utils">
 							<a href="/auth?logout">Logout</a>
 						</div>
@@ -107,10 +106,6 @@
                             <p>
                                 <label for="post">Send interval</label>
                                 <input id="send_interval" type="text" name="send_interval" />
-                            </p>
-                            <p>
-                                <label for="post">Postback IP</label>
-                                <input id="postback_ip" type="text" name="postback_ip" />
                             </p>
                             <p>
                                 <input type="submit" value="Start" onclick="startCollectingCmd()"/>

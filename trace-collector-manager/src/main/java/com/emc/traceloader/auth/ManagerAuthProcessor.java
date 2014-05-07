@@ -29,8 +29,9 @@ public class ManagerAuthProcessor extends HttpServlet {
                     request.getParameter("login"), request.getParameter("password"));
 
             if(authInfo != null && authInfo.getStatus() == 0) {
-                request.getSession().setAttribute("TL_SESSION_ID", authInfo.getSession_id());
-                request.getSession().setAttribute("TL_USER_ID", request.getParameter("login"));
+                request.getSession().setAttribute(SessionParameters.SESSION_ID_PARAM, authInfo.getSession_id());
+                request.getSession().setAttribute(SessionParameters.USER_ID_PARAM, request.getParameter("login"));
+                request.getSession().setAttribute(SessionParameters.KEEPER_URL_PARAM, request.getParameter("keeper_url"));
             }
         } else if(request.getParameter("logout") != null) {
             request.getSession().invalidate();
