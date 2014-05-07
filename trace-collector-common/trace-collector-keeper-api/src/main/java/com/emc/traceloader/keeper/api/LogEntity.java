@@ -57,6 +57,7 @@ public class LogEntity {
                 "op_code='" + op_code + '\'' +
                 ", device_id='" + device_id + '\'' +
                 ", op_address='" + op_address + '\'' +
+                ", transfer_length='" + transfer_length + '\'' +
                 ", datetime='" + datetime + '\'' +
                 '}';
     }

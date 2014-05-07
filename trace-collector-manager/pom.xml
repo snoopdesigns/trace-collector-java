@@ -94,7 +94,7 @@
         </profile>
     </profiles>
     <build>
-        <finalName>trace-collector-unit</finalName>
+        <finalName>trace-collector-manager</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
