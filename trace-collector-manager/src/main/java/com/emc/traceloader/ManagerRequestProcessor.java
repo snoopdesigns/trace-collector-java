@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 )
 public class ManagerRequestProcessor extends HttpServlet {
 
-    private static final Logger logger = Logger.getLogger(ManagerController.class.toString());
+    private static final Logger logger = Logger.getLogger(ManagerRequestProcessor.class.toString());
     private ManagerController controller = new ManagerController();
 
     @Override

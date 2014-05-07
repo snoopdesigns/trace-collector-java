@@ -57,6 +57,10 @@
 
 	<%
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
+        String session_id = (String)session.getAttribute("TL_SESSION_ID");
+        if(null == session_id) {
+            response.sendRedirect("login.jsp");
+        }
     %>
 
 	<body>
@@ -72,9 +76,9 @@
 			<div id="content" class="container_16 clearfix">
 				<div class="grid_5">
 					<div class="box">
-						<h2>Elizaveta</h2>
+						<h2><%=(String)session.getAttribute("TL_USER_ID")%></h2>
 						<div class="utils">
-							<a href="#">View More</a>
+							<a href="/auth?logout">Logout</a>
 						</div>
 						<p><strong>Last Signed In : </strong> Wed 11 Nov, 7:31<br /><strong>IP Address : </strong> 192.168.1.101</p>
 					</div>
@@ -119,7 +123,7 @@
                     <div class="box">
                         <h2>Hosts</h2>
                         <div class="utils">
-                            <a href="#">View More</a>
+                            <a href="hosts.jsp">View More</a>
                         </div>
                         <table>
                             <thead>

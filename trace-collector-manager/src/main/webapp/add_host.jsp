@@ -22,6 +22,10 @@
             dbUtils.addHost(new Host(request.getParameter("ip_address"), request.getParameter("port"), request.getParameter("url_context")));
             entryAddedSuccess = true;
         }
+        String session_id = (String)session.getAttribute("TL_SESSION_ID");
+        if(null == session_id) {
+            response.sendRedirect("login.jsp");
+        }
     %>
 
 	<body>

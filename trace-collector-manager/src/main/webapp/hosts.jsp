@@ -16,6 +16,10 @@
 
     <%
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
+        String session_id = (String)session.getAttribute("TL_SESSION_ID");
+        if(null == session_id) {
+            response.sendRedirect("login.jsp");
+        }
     %>
 
 	<body>
