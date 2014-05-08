@@ -8,13 +8,46 @@
     <packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
-    <modules>
-        <module>trace-collector-manager</module>
-        <module>trace-collector-unit</module>
-        <module>trace-collector-common</module>
-        <module>trace-collector-ptrace-emulator</module>
-        <module>trace-collector-keeper-emulator</module>
-  </modules>
+    <profiles>
+        <profile>
+            <id>BuildManager</id>
+            <modules>
+                <module>trace-collector-manager</module>
+                <module>trace-collector-common</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>BuildUnit</id>
+            <modules>
+                <module>trace-collector-unit</module>
+                <module>trace-collector-common</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>BuildKeeper</id>
+            <modules>
+                <module>trace-collector-common</module>
+                <module>trace-collector-keeper-emulator</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>BuildPtrace</id>
+            <modules>
+                <module>trace-collector-common</module>
+                <module>trace-collector-ptrace-emulator</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>BuildAll</id>
+            <modules>
+                <module>trace-collector-manager</module>
+                <module>trace-collector-unit</module>
+                <module>trace-collector-common</module>
+                <module>trace-collector-ptrace-emulator</module>
+                <module>trace-collector-keeper-emulator</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <dependencyManagement>
         <dependencies>
