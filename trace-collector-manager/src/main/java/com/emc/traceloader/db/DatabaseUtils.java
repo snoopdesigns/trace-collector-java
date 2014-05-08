@@ -52,6 +52,17 @@ public class DatabaseUtils {
         }
     }
 
+    public void deleteHost(Long id, String userLogin) {
+        try {
+            User user  = (User)em.find(User.class, this.getUserIdByLogin(userLogin));
+            em.getTransaction().begin();
+            user.deleteHost(id);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addUser(User user) {
         try {
             em.getTransaction().begin();

@@ -24,6 +24,16 @@
         }
     %>
 
+    <script>
+        function deleteHost(id) {
+            var xmlHttp = null;
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "/db?id=" + id, false);
+            xmlHttp.send( null );
+            location.reload();
+        }
+    </script>
+
 	<body>
 	<h1 id="head">Trace Collector Manager Application</h1>
         <ul id="navigation">
@@ -48,8 +58,7 @@
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>
                                     <td><%=host.getUrlContext()%></td>
-                                    <td><a href="#" class="edit">Edit</a></td>
-                                    <td><a href="#" class="delete">Delete</a></td>
+                                    <td><a onclick="deleteHost(<%=host.getId()%>)" href="#" class="delete">Delete</a></td>
                                 </tr>
                             <%  }  %>
 						</tbody>

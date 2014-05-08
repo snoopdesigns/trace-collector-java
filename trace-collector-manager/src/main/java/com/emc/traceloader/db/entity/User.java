@@ -52,7 +52,17 @@ public class User implements Serializable {
     }
 
     public void addNewHost(Host host) {
+        host.setId(new Long(hosts.size() + 1));
         this.hosts.add(host);
+    }
+
+    public void deleteHost(Long id) {
+        for(int i=0;i<hosts.size();i++) {
+            if(hosts.get(i).getId().compareTo(id) == 0) {
+                this.hosts.remove(i);
+                return;
+            }
+        }
     }
 
     @Override
