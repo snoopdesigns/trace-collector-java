@@ -2,16 +2,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.emc.traceloader</groupId>
     <artifactId>trace-collector-unit</artifactId>
     <packaging>war</packaging>
-    <version>0.0.1-SNAPSHOT</version>
     <name>trace-collector-unit</name>
 
     <parent>
         <groupId>com.emc.traceloader</groupId>
-        <artifactId>traceloader-all</artifactId>
+        <artifactId>trace-collector-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../trace-collector-parent</relativePath>
     </parent>
 
 

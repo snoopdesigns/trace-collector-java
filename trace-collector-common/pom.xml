@@ -6,13 +6,12 @@
 
     <parent>
         <groupId>com.emc.traceloader</groupId>
-        <artifactId>traceloader-all</artifactId>
+        <artifactId>trace-collector-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../trace-collector-parent</relativePath>
     </parent>
 
-    <groupId>com.emc.traceloader</groupId>
     <artifactId>trace-collector-common</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>trace-collector-common</name>
 	<packaging>pom</packaging>
     
