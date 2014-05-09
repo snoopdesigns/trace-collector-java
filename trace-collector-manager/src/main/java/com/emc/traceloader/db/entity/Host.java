@@ -8,11 +8,11 @@ import java.io.Serializable;
 public class Host implements Serializable{
 
     private static final long serialVersionUID = 1L;
-
     private Long id;
     private String ip;
     private String port;
     private String urlContext;
+    private boolean selected;
 
     public Host() {
     }
@@ -21,6 +21,15 @@ public class Host implements Serializable{
         this.ip = ip;
         this.port = port;
         this.urlContext = urlContext;
+        this.selected = false;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public String getUrlContext() {

@@ -63,6 +63,17 @@ public class DatabaseUtils {
         }
     }
 
+    public void setHostSelected(Long id, String userLogin, boolean selected) {
+        try {
+            User user  = (User)em.find(User.class, this.getUserIdByLogin(userLogin));
+            em.getTransaction().begin();
+            user.setHostSelected(id, selected);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addUser(User user) {
         try {
             em.getTransaction().begin();
@@ -73,11 +84,13 @@ public class DatabaseUtils {
         }
     }
 
-    public List<URL> getHostsURLs(String userLogin) {
+    public List<URL> getHostsURLsWithoutSelected(String userLogin) {
         List<URL> result = new ArrayList<URL>();
         try {
         for(Host host : this.getAllHosts(userLogin)) {
-            result.add(new URL(HttpUtils.buildURL(host)));
+            if(host.isSelected()) {
+                result.add(new URL(HttpUtils.buildURL(host)));
+            }
         }
         } catch (MalformedURLException e) {
             e.printStackTrace();

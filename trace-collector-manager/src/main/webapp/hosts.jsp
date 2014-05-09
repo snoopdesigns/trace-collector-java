@@ -28,7 +28,7 @@
         function deleteHost(id) {
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", "/db?id=" + id, false);
+            xmlHttp.open( "GET", "/db?action=delete&id=" + id, false);
             xmlHttp.send( null );
             location.reload();
         }

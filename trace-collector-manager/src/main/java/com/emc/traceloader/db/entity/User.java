@@ -65,6 +65,17 @@ public class User implements Serializable {
         }
     }
 
+    public void setHostSelected(Long id, boolean selected) {
+        for(int i=0;i<hosts.size();i++) {
+            if(hosts.get(i).getId().compareTo(id) == 0) {
+                Host host = hosts.get(i);
+                host.setSelected(selected);
+                this.hosts.set(i, host);
+                return;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "User{" +

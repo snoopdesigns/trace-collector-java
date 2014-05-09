@@ -3,7 +3,6 @@ package com.emc.traceloader;
 import com.emc.traceloader.auth.SessionParameters;
 import com.emc.traceloader.db.DatabaseUtils;
 import com.emc.traceloader.unit.api.CmdEntity;
-import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Logger;
 
 @WebServlet(
@@ -34,7 +32,7 @@ public class ManagerRequestProcessor extends HttpServlet {
         if(!request.getParameterMap().isEmpty()) {
             logger.info("Parsing user request...");
             CmdEntity cmd = controller.parseUIRequest(request);
-            controller.sendCommand(cmd, dbUtils.getHostsURLs((String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM)));
+            controller.sendCommand(cmd, dbUtils.getHostsURLsWithoutSelected((String) request.getSession().getAttribute(SessionParameters.USER_ID_PARAM)));
         }
         request.getRequestDispatcher("").forward(request, response); //process jsp page
     }

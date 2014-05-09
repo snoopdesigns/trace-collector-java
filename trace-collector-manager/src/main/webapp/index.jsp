@@ -52,6 +52,13 @@
             xmlHttp.send( null );
             document.getElementById("success_msg").innerHTML = '<p class="success">SEND command success</p>';
         }
+
+        function handleClick(cb, id) {
+            var xmlHttp = null;
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "/db?action=select&id="+ id +"&selected="+cb.checked, false);
+            xmlHttp.send( null );
+        }
     </script>
 
 	<%
@@ -124,6 +131,7 @@
                         <table>
                             <thead>
                                 <tr>
+                                    <th>Select</th>
                             	    <th>IP address</th>
                             		<th>Port</th>
                             		<th>URL context</th>
@@ -132,6 +140,8 @@
                             <tbody>
                             <%  for(Host host : dbUtils.getAllHosts(user_id)) { %>
                                 <tr>
+                                    <td><input type="checkbox"
+                                        onclick='handleClick(this,<%=host.getId()%>);'<%if(host.isSelected()){%>checked<%}%>/></td>
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>
                                     <td><%=host.getUrlContext()%></td>
