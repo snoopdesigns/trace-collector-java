@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>trace-loader-build</artifactId>
-	<name>trace-loader-build</name>
+	<artifactId>trace-collector-build</artifactId>
+	<name>trace-collector-build</name>
     <packaging>pom</packaging>
 
     <parent>
         <groupId>com.emc.traceloader</groupId>
-        <artifactId>trace-loader-parent</artifactId>
+        <artifactId>trace-collector-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../trace-loader-parent</relativePath>
+        <relativePath>../trace-collector-parent</relativePath>
     </parent>
 
     <profiles>
@@ -60,22 +60,22 @@
     <dependencies>
         <dependency>
             <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-loader-unit</artifactId>
+            <artifactId>trace-collector-unit</artifactId>
             <classifier>exec-war</classifier>
         </dependency>
         <dependency>
             <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-loader-manager</artifactId>
+            <artifactId>trace-collector-manager</artifactId>
             <classifier>exec-war</classifier>
         </dependency>
         <dependency>
             <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-loader-keeper-emulator</artifactId>
+            <artifactId>trace-collector-keeper-emulator</artifactId>
             <classifier>exec-war</classifier>
         </dependency>
         <dependency>
             <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-loader-ptrace-emulator</artifactId>
+            <artifactId>trace-collector-ptrace-emulator</artifactId>
             <classifier>jar-with-dependencies</classifier>
         </dependency>
         <dependency>

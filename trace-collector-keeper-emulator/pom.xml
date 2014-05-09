@@ -2,15 +2,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>trace-loader-unit</artifactId>
+    <artifactId>trace-collector-keeper-emulator</artifactId>
     <packaging>war</packaging>
-    <name>trace-loader-unit</name>
+    <name>trace-collector-keeper-emulator</name>
 
     <parent>
         <groupId>com.emc.traceloader</groupId>
-        <artifactId>trace-loader-parent</artifactId>
+        <artifactId>trace-collector-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../trace-loader-parent</relativePath>
+        <relativePath>../trace-collector-parent</relativePath>
     </parent>
 
 
@@ -26,20 +26,12 @@
         </dependency>
         <dependency>
             <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-loader-unit-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-loader-keeper-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
+            <artifactId>trace-collector-keeper-api</artifactId>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>trace-loader-unit</finalName>
+        <finalName>trace-collector-unit</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

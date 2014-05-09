@@ -4,14 +4,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>trace-loader-ptrace-emulator</artifactId>
-    <name>trace-loader-ptrace-emulator</name>
+    <artifactId>trace-collector-ptrace-emulator</artifactId>
+    <name>trace-collector-ptrace-emulator</name>
 
     <parent>
         <groupId>com.emc.traceloader</groupId>
-        <artifactId>trace-loader-parent</artifactId>
+        <artifactId>trace-collector-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../trace-loader-parent</relativePath>
+        <relativePath>../trace-collector-parent</relativePath>
     </parent>
 
     <dependencies>
