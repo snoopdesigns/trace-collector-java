@@ -9,7 +9,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>Trace Loader Manager</title>
+		<title>Trace Collector Manager</title>
 		<link rel="stylesheet" href="css/960.css" type="text/css" media="screen" charset="utf-8" />
 		<link rel="stylesheet" href="css/template.css" type="text/css" media="screen" charset="utf-8" />
 		<link rel="stylesheet" href="css/colour.css" type="text/css" media="screen" charset="utf-8" />
@@ -35,7 +35,7 @@
     </script>
 
 	<body>
-	<h1 id="head">Trace Loader Manager Application</h1>
+	<h1 id="head">Trace Collector Manager Application</h1>
         <ul id="navigation">
         	<li><a href="index.jsp">Main</a></li>
             <li><span class="active">Hosts</span></li>
