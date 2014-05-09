@@ -1,9 +1,17 @@
 trace-collector-java
 ====================
 
-trace-collector-java
+To build executable files do:
 
-To build executable war file do:
+mvn clean install -P BuildAll
 
-mvn clean install -P executable-war
- test
+Available build profiles:
+
+  BuildAll
+  BuildUnit
+  BuildManager
+  BuildUnit
+
+
+Executable files will be placed in ../trace-collector-build/dist
+Test environment setup script is in ../trace-collector-build/dist. run.bat for windows and run.sh for linux
