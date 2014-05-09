@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.emc.traceloader</groupId>
-	<artifactId>trace-collector-all</artifactId>
-	<name>trace-collector-all</name>
+	<artifactId>trace-loader-all</artifactId>
+	<name>trace-loader-all</name>
     <packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
@@ -12,43 +12,43 @@
         <profile>
             <id>BuildAll</id>
             <modules>
-                <module>trace-collector-parent</module>
-                <module>trace-collector-manager</module>
-                <module>trace-collector-unit</module>
-                <module>trace-collector-common</module>
-                <module>trace-collector-ptrace-emulator</module>
-                <module>trace-collector-keeper-emulator</module>
-                <module>trace-collector-build</module>
+                <module>trace-loader-parent</module>
+                <module>trace-loader-manager</module>
+                <module>trace-loader-unit</module>
+                <module>trace-loader-common</module>
+                <module>trace-loader-ptrace-emulator</module>
+                <module>trace-loader-keeper-emulator</module>
+                <module>trace-loader-build</module>
             </modules>
         </profile>
         <profile>
             <id>BuildUnit</id>
             <modules>
-                <module>trace-collector-parent</module>
-                <module>trace-collector-unit</module>
-                <module>trace-collector-common</module>
-                <module>trace-collector-ptrace-emulator</module>
-                <module>trace-collector-build</module>
+                <module>trace-loader-parent</module>
+                <module>trace-loader-unit</module>
+                <module>trace-loader-common</module>
+                <module>trace-loader-ptrace-emulator</module>
+                <module>trace-loader-build</module>
             </modules>
         </profile>
         <profile>
             <id>BuildManager</id>
             <modules>
-                <module>trace-collector-parent</module>
-                <module>trace-collector-manager</module>
-                <module>trace-collector-common</module>
-                <module>trace-collector-ptrace-emulator</module>
-                <module>trace-collector-build</module>
+                <module>trace-loader-parent</module>
+                <module>trace-loader-manager</module>
+                <module>trace-loader-common</module>
+                <module>trace-loader-ptrace-emulator</module>
+                <module>trace-loader-build</module>
             </modules>
         </profile>
         <profile>
             <id>BuildKeeper</id>
             <modules>
-                <module>trace-collector-parent</module>
-                <module>trace-collector-common</module>
-                <module>trace-collector-ptrace-emulator</module>
-                <module>trace-collector-keeper-emulator</module>
-                <module>trace-collector-build</module>
+                <module>trace-loader-parent</module>
+                <module>trace-loader-common</module>
+                <module>trace-loader-ptrace-emulator</module>
+                <module>trace-loader-keeper-emulator</module>
+                <module>trace-loader-build</module>
             </modules>
         </profile>
     </profiles>

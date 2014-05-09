@@ -2,30 +2,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>trace-collector-manager</artifactId>
+    <artifactId>trace-loader-keeper-emulator</artifactId>
     <packaging>war</packaging>
-    <name>trace-collector-manager</name>
+    <name>trace-loader-keeper-emulator</name>
 
     <parent>
         <groupId>com.emc.traceloader</groupId>
-        <artifactId>trace-collector-parent</artifactId>
+        <artifactId>trace-loader-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../trace-collector-parent</relativePath>
+        <relativePath>../trace-loader-parent</relativePath>
     </parent>
 
-    <repositories>
-        <repository>
-            <id>objectdb</id>
-            <name>ObjectDB Repository</name>
-            <url>http://m2.objectdb.com</url>
-        </repository>
-    </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>com.objectdb</groupId>
-            <artifactId>objectdb</artifactId>
-        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -37,20 +26,12 @@
         </dependency>
         <dependency>
             <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-collector-unit-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.emc.traceloader</groupId>
-            <artifactId>trace-collector-keeper-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
+            <artifactId>trace-loader-keeper-api</artifactId>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>trace-collector-manager</finalName>
+        <finalName>trace-loader-unit</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -61,26 +42,6 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2</version>
-                <executions>
-                    <execution>
-                        <id>enhance</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>com.objectdb.Enhancer</mainClass>
-                            <arguments>
-                                <argument>com.emc.traceloader.db.entity.User</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -103,4 +64,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

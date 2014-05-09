@@ -6,14 +6,13 @@
 
     <parent>
         <groupId>com.emc.traceloader</groupId>
-        <artifactId>trace-collector-common</artifactId>
+        <artifactId>trace-loader-common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.emc.traceloader</groupId>
-    <artifactId>trace-collector-unit-api</artifactId>
+    <artifactId>trace-loader-unit-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>trace-collector-unit-api</name>
+    <name>trace-loader-unit-api</name>
 
     <dependencies>
         <dependency>

@@ -6,18 +6,18 @@
 
     <parent>
         <groupId>com.emc.traceloader</groupId>
-        <artifactId>trace-collector-parent</artifactId>
+        <artifactId>trace-loader-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../trace-collector-parent</relativePath>
+        <relativePath>../trace-loader-parent</relativePath>
     </parent>
 
-    <artifactId>trace-collector-common</artifactId>
-    <name>trace-collector-common</name>
+    <artifactId>trace-loader-common</artifactId>
+    <name>trace-loader-common</name>
 	<packaging>pom</packaging>
     
 	<modules>
-		<module>trace-collector-keeper-api</module>
-		<module>trace-collector-unit-api</module>
+		<module>trace-loader-keeper-api</module>
+		<module>trace-loader-unit-api</module>
 	</modules>
 	
 </project>

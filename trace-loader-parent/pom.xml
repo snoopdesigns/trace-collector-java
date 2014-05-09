@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.emc.traceloader</groupId>
-	<artifactId>trace-collector-parent</artifactId>
-	<name>trace-collector-parent</name>
+	<artifactId>trace-loader-parent</artifactId>
+	<name>trace-loader-parent</name>
     <packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
@@ -38,35 +38,35 @@
             </dependency>
             <dependency>
                 <groupId>com.emc.traceloader</groupId>
-                <artifactId>trace-collector-keeper-api</artifactId>
+                <artifactId>trace-loader-keeper-api</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.emc.traceloader</groupId>
-                <artifactId>trace-collector-unit-api</artifactId>
+                <artifactId>trace-loader-unit-api</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.emc.traceloader</groupId>
-                <artifactId>trace-collector-manager</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-                <classifier>exec-war</classifier>
-            </dependency>
-            <dependency>
-                <groupId>com.emc.traceloader</groupId>
-                <artifactId>trace-collector-unit</artifactId>
+                <artifactId>trace-loader-manager</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <classifier>exec-war</classifier>
             </dependency>
             <dependency>
                 <groupId>com.emc.traceloader</groupId>
-                <artifactId>trace-collector-keeper-emulator</artifactId>
+                <artifactId>trace-loader-unit</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <classifier>exec-war</classifier>
             </dependency>
             <dependency>
                 <groupId>com.emc.traceloader</groupId>
-                <artifactId>trace-collector-ptrace-emulator</artifactId>
+                <artifactId>trace-loader-keeper-emulator</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <classifier>exec-war</classifier>
+            </dependency>
+            <dependency>
+                <groupId>com.emc.traceloader</groupId>
+                <artifactId>trace-loader-ptrace-emulator</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <classifier>jar-with-dependencies</classifier>
             </dependency>
