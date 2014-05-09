@@ -26,6 +26,7 @@ public class HttpUtils {
 
     private static final String HTTP_PROTOCOL = "http://";
     private static final String COLON = ":";
+    private static final String UNIT_URL_CONTEXT = "/unit";
 
     private static Gson gson = new Gson();
 
@@ -73,7 +74,7 @@ public class HttpUtils {
         sb.append(host.getIp());
         sb.append(COLON);
         sb.append(host.getPort());
-        sb.append(host.getUrlContext());
+        sb.append(UNIT_URL_CONTEXT);
         return sb.toString();
     }
 

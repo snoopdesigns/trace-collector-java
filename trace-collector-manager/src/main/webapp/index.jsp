@@ -134,7 +134,6 @@
                                     <th>Select</th>
                             	    <th>IP address</th>
                             		<th>Port</th>
-                            		<th>URL context</th>
                             	</tr>
                             </thead>
                             <tbody>
@@ -144,7 +143,6 @@
                                         onclick='handleClick(this,<%=host.getId()%>);'<%if(host.isSelected()){%>checked<%}%>/></td>
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>
-                                    <td><%=host.getUrlContext()%></td>
                                 </tr>
                             <%  }  %>
                             </tbody>

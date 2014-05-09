@@ -11,16 +11,14 @@ public class Host implements Serializable{
     private Long id;
     private String ip;
     private String port;
-    private String urlContext;
     private boolean selected;
 
     public Host() {
     }
 
-    public Host(String ip, String port, String urlContext) {
+    public Host(String ip, String port) {
         this.ip = ip;
         this.port = port;
-        this.urlContext = urlContext;
         this.selected = false;
     }
 
@@ -30,14 +28,6 @@ public class Host implements Serializable{
 
     public void setSelected(boolean selected) {
         this.selected = selected;
-    }
-
-    public String getUrlContext() {
-        return urlContext;
-    }
-
-    public void setUrlContext(String urlContext) {
-        this.urlContext = urlContext;
     }
 
     public Long getId() {

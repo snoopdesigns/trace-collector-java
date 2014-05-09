@@ -48,7 +48,6 @@
 							<tr>
 								<th>IP address</th>
 								<th>Port</th>
-								<th>URL context</th>
 								<th colspan="2" width="10%">Actions</th>
 							</tr>
 						</thead>
@@ -57,7 +56,6 @@
                                 <tr>
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>
-                                    <td><%=host.getUrlContext()%></td>
                                     <td><a onclick="deleteHost(<%=host.getId()%>)" href="#" class="delete">Delete</a></td>
                                 </tr>
                             <%  }  %>

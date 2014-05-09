@@ -25,7 +25,7 @@
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
         Map req_params = request.getParameterMap();
         if (req_params.size() > 1) {
-            dbUtils.addHost(new Host(request.getParameter("ip_address"), request.getParameter("port"), request.getParameter("url_context")), user_id);
+            dbUtils.addHost(new Host(request.getParameter("ip_address"), request.getParameter("port")), user_id);
             entryAddedSuccess = true;
         }
     %>
@@ -55,10 +55,6 @@
                         <p>
                             <label for="title">Port <small>Port of Trace Loader Unit application.</small></label>
                             <input type="text" name="port" />
-                        </p>
-                        <p>
-                            <label for="title">URL context <small>URL context.</small></label>
-                            <input type="text" name="url_context" />
                         </p>
 					</div>
 				</div>
