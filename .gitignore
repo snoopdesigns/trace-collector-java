@@ -9,4 +9,4 @@
 target/
 .idea/
 .extract
-trace-loader-build/dist/
+trace-collector-build/dist/
