@@ -42,6 +42,17 @@
             document.getElementById("success_msg").innerHTML = '<p class="success">START command success</p>';
         }
 
+        function stopCollectingCmd() {
+            var send_politic = document.getElementById("send_politic").value;
+            var send_interval = document.getElementById("send_interval").value;
+            var xmlHttp = null;
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "/mgr?cmd_type=STOP_COLLECTING&postback_ip=<%=(String)session.getAttribute(SessionParameters.KEEPER_URL_PARAM)%>&send_interval="+
+                send_interval+"&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false);
+            xmlHttp.send( null );
+            document.getElementById("success_msg").innerHTML = '<p class="success">STOP command success</p>';
+                }
+
         function sendCmd() {
             var send_politic = document.getElementById("send_politic").value;
             var send_interval = document.getElementById("send_interval").value;
@@ -117,7 +128,7 @@
                             </p>
                             <p>
                                 <input type="submit" value="Start" onclick="startCollectingCmd()"/>
-                                <input type="submit" value="Stop" />
+                                <input type="submit" value="Stop" onclick="stopCollectingCmd()"/>
                                 <input type="submit" value="Send" onclick="sendCmd()"/>
                             </p>
                     </div>

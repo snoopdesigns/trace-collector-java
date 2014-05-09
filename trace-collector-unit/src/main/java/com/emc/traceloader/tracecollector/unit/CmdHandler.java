@@ -25,6 +25,7 @@ public class CmdHandler {
             executorService.ptraceExecutorInstance().startCollecting();   //need to check SEND_POLITIC
         } else if(cmd.getCmd_type() == ControlCmdType.STOP_COLLECTING) {
             logger.info("Stop collecting requested!");
+            executorService.ptraceExecutorInstance().stopCollecting();
         } else if(cmd.getCmd_type() == ControlCmdType.SEND) {
             try {
                 PostTask task = new PostTask(new URL(cmd.getPostback_ip()),

@@ -10,9 +10,14 @@ import java.io.PrintWriter;
 
 public class ExecutorServiceImpl implements ExecutorService{
 
+    private PtraceExecutorService ptraceInstance = null;
+
     @Override
     public PtraceExecutorService ptraceExecutorInstance() {
-        return new PtraceExecutorServiceImpl(this);
+        if(ptraceInstance == null) {
+            ptraceInstance = new PtraceExecutorServiceImpl(this);
+        }
+        return ptraceInstance;
     }
 
     public void executeCmd(String cmd) throws IOException, InterruptedException {
