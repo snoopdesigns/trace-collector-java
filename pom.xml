@@ -3,47 +3,53 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.emc.traceloader</groupId>
-	<artifactId>traceloader-all</artifactId>
-	<name>EMC traceloader PARENT</name>
+	<artifactId>trace-collector-all</artifactId>
+	<name>trace-collector-all</name>
     <packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
-    <modules>
-        <module>trace-collector-manager</module>
-        <module>trace-collector-unit</module>
-        <module>trace-collector-common</module>
-        <module>trace-collector-ptrace-emulator</module>
-        <module>trace-collector-keeper-emulator</module>
-  </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>3.8.1</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-api</artifactId>
-                <version>6.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.2.4</version>
-            </dependency>
-            <dependency>
-                <groupId>com.emc.traceloader</groupId>
-                <artifactId>trace-collector-common</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>4.0-alpha4</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <profiles>
+        <profile>
+            <id>BuildAll</id>
+            <modules>
+                <module>trace-collector-parent</module>
+                <module>trace-collector-manager</module>
+                <module>trace-collector-unit</module>
+                <module>trace-collector-common</module>
+                <module>trace-collector-ptrace-emulator</module>
+                <module>trace-collector-keeper-emulator</module>
+                <module>trace-collector-build</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>BuildUnit</id>
+            <modules>
+                <module>trace-collector-parent</module>
+                <module>trace-collector-unit</module>
+                <module>trace-collector-common</module>
+                <module>trace-collector-ptrace-emulator</module>
+                <module>trace-collector-build</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>BuildManager</id>
+            <modules>
+                <module>trace-collector-parent</module>
+                <module>trace-collector-manager</module>
+                <module>trace-collector-common</module>
+                <module>trace-collector-ptrace-emulator</module>
+                <module>trace-collector-build</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>BuildKeeper</id>
+            <modules>
+                <module>trace-collector-parent</module>
+                <module>trace-collector-common</module>
+                <module>trace-collector-ptrace-emulator</module>
+                <module>trace-collector-keeper-emulator</module>
+                <module>trace-collector-build</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

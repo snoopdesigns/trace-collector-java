@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>trace-collector-build</artifactId>
+	<name>trace-collector-build</name>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>com.emc.traceloader</groupId>
+        <artifactId>trace-collector-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../trace-collector-parent</relativePath>
+    </parent>
+
+    <profiles>
+        <profile>
+            <id>BuildAll</id>
+            <properties>
+                <build.target>build-all</build.target>
+            </properties>
+        </profile>
+        <profile>
+            <id>BuildUnit</id>
+            <properties>
+                <build.target>build-unit</build.target>
+            </properties>
+        </profile>
+        <profile>
+            <id>BuildManager</id>
+            <properties>
+                <build.target>build-manager</build.target>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <configuration>
+                            <tasks>
+                                <ant antfile="${basedir}/build.xml" target="${build.target}"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.emc.traceloader</groupId>
+            <artifactId>trace-collector-unit</artifactId>
+            <classifier>exec-war</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.emc.traceloader</groupId>
+            <artifactId>trace-collector-manager</artifactId>
+            <classifier>exec-war</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.emc.traceloader</groupId>
+            <artifactId>trace-collector-keeper-emulator</artifactId>
+            <classifier>exec-war</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.emc.traceloader</groupId>
+            <artifactId>trace-collector-ptrace-emulator</artifactId>
+            <classifier>jar-with-dependencies</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+        </dependency>
+    </dependencies>
+</project>

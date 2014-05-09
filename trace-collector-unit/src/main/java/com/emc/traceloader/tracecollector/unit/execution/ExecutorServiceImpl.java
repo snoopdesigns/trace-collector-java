@@ -16,7 +16,14 @@ public class ExecutorServiceImpl implements ExecutorService{
     }
 
     public void executeCmd(String cmd) throws IOException, InterruptedException {
-        String[] command = { "cmd" }; //only for windows
+        String[] command = new String[1];
+        if(OSValidator.isWindows()) {
+            command[0] = "cmd";
+        } else if(OSValidator.isUnix()) {
+            command[0] = "bash";
+        } else {
+            command[0] = "cmd";
+        }
         Process p = Runtime.getRuntime().exec(command);
         new Thread(new SyncPipe(p.getErrorStream(), System.err)).start();
         new Thread(new SyncPipe(p.getInputStream(), System.out)).start();

@@ -6,34 +6,18 @@
 
     <parent>
         <groupId>com.emc.traceloader</groupId>
-        <artifactId>traceloader-all</artifactId>
+        <artifactId>trace-collector-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../trace-collector-parent</relativePath>
     </parent>
 
-    <groupId>com.emc.traceloader</groupId>
     <artifactId>trace-collector-common</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>trace-collector-common</name>
-
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<packaging>pom</packaging>
+    
+	<modules>
+		<module>trace-collector-keeper-api</module>
+		<module>trace-collector-unit-api</module>
+	</modules>
+	
 </project>

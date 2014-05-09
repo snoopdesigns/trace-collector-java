@@ -1,7 +1,8 @@
 package com.emc.traceloader;
 
+import com.emc.traceloader.auth.SessionParameters;
 import com.emc.traceloader.db.DatabaseUtils;
-import com.emc.traceloader.entity.CmdEntity;
+import com.emc.traceloader.unit.api.CmdEntity;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -19,8 +20,7 @@ import java.util.logging.Logger;
 )
 public class ManagerRequestProcessor extends HttpServlet {
 
-    private static final Logger logger = Logger.getLogger(ManagerController.class.toString());
-    private Gson gson = new Gson();
+    private static final Logger logger = Logger.getLogger(ManagerRequestProcessor.class.toString());
     private ManagerController controller = new ManagerController();
 
     @Override
@@ -28,16 +28,14 @@ public class ManagerRequestProcessor extends HttpServlet {
 
         DatabaseUtils dbUtils =
                 (DatabaseUtils)getServletContext().getAttribute(DatabaseUtils.class.getName());
-        logger.info("Execute select: " + dbUtils.getAllHosts());
+        logger.info("Execute select: " + dbUtils.getAllHosts((String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM)));
 
         logger.info("GET request received! PATH:" + request.getContextPath());
         if(!request.getParameterMap().isEmpty()) {
             logger.info("Parsing user request...");
             CmdEntity cmd = controller.parseUIRequest(request);
-            logger.info("Sending command: " + cmd + " to URL: " + request.getParameter("send_address"));
-            controller.sendCommand(cmd, new URL(request.getParameter("send_address")));
+            controller.sendCommand(cmd, dbUtils.getHostsURLs((String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM)));
         }
-        logger.info("Processing index.jsp...");
         request.getRequestDispatcher("").forward(request, response); //process jsp page
     }
 }

@@ -1,11 +1,11 @@
 package com.emc.traceloader.tracecollector.unit;
 
-import com.emc.traceloader.entity.CmdEntity;
-import com.emc.traceloader.entity.Constants;
 import com.emc.traceloader.tracecollector.unit.execution.ExecutorService;
 import com.emc.traceloader.tracecollector.unit.execution.ExecutorServiceImpl;
 import com.emc.traceloader.tracecollector.unit.fileutils.CDBLogFileParser;
 import com.emc.traceloader.tracecollector.unit.postutils.PostTask;
+import com.emc.traceloader.unit.api.CmdEntity;
+import com.emc.traceloader.unit.api.ControlCmdType;
 
 import java.net.URL;
 import java.util.concurrent.Executors;
@@ -20,12 +20,12 @@ public class CmdHandler {
     private ScheduledExecutorService threadExecutor = Executors.newSingleThreadScheduledExecutor();
 
     public void handleExternalCommand(CmdEntity cmd) {
-        if(cmd.getCmd_type() == Constants.ControlCmdType.START_COLLECTING) {
+        if(cmd.getCmd_type() == ControlCmdType.START_COLLECTING) {
             logger.info("Start collecting requested!");
             executorService.ptraceExecutorInstance().startCollecting();   //need to check SEND_POLITIC
-        } else if(cmd.getCmd_type() == Constants.ControlCmdType.STOP_COLLECTING) {
+        } else if(cmd.getCmd_type() == ControlCmdType.STOP_COLLECTING) {
             logger.info("Stop collecting requested!");
-        } else if(cmd.getCmd_type() == Constants.ControlCmdType.SEND) {
+        } else if(cmd.getCmd_type() == ControlCmdType.SEND) {
             try {
                 PostTask task = new PostTask(new URL(cmd.getPostback_ip()),
                         cmd.getLog_entity_per_msg(), parser.getTraces("f1.txt"), cmd.getSend_interval());

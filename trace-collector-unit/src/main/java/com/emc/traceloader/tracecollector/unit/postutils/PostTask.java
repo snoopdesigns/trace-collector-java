@@ -1,7 +1,7 @@
 package com.emc.traceloader.tracecollector.unit.postutils;
 
-import com.emc.traceloader.entity.LogEntity;
-import com.emc.traceloader.entity.MsgEntity;
+import com.emc.traceloader.keeper.api.LogEntity;
+import com.emc.traceloader.keeper.api.MsgEntity;
 import com.google.gson.Gson;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -10,6 +10,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.net.URL;
 import java.util.Collection;
 import java.util.logging.Logger;
