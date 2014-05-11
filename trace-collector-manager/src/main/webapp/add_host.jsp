@@ -4,6 +4,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Set"%>
 <%@page import="com.emc.traceloader.db.DatabaseUtils"%>
+<%@page import="com.emc.traceloader.sync.UnitSynchronizationService"%>
 <%@page import="com.emc.traceloader.db.entity.Host"%>
 <%@page import="com.emc.traceloader.auth.SessionParameters"%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -22,11 +23,18 @@
             response.sendRedirect("login.jsp");
         }
         boolean entryAddedSuccess = false;
+        boolean entryAddedError = false;
         DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
+        UnitSynchronizationService syncService = (UnitSynchronizationService)pageContext.getServletContext().getAttribute(UnitSynchronizationService.class.getName());
         Map req_params = request.getParameterMap();
         if (req_params.size() > 1) {
-            dbUtils.addHost(new Host(request.getParameter("ip_address"), request.getParameter("port")), user_id);
-            entryAddedSuccess = true;
+            Host host = new Host(request.getParameter("ip_address"), request.getParameter("port"));
+            if(syncService.checkUnitAvailable(host)) {
+                dbUtils.addHost(host, user_id);
+                entryAddedSuccess = true;
+            } else {
+                entryAddedError = true;
+            }
         }
     %>
 
@@ -42,8 +50,11 @@
 				<div class="grid_16">
 					<h2>Add new host</h2>
 					<% if(entryAddedSuccess) { %>
-					<p class="success">New host successfully added.</p>
+					    <p class="success">New host successfully added.</p>
 					<% } %>
+					<% if(entryAddedError) { %>
+                        <p class="Error">Host is unavailable</p>
+                    <% } %>
 				</div>
 
 				<div class="grid_5">

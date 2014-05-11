@@ -2,6 +2,8 @@ package com.emc.traceloader;
 
 import com.emc.traceloader.auth.AuthController;
 import com.emc.traceloader.db.DatabaseUtils;
+import com.emc.traceloader.sync.UnitSynchronizationService;
+import com.emc.traceloader.sync.UnitSynchronizationServiceImpl;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,6 +20,8 @@ public class ManagerContextListener implements ServletContextListener {
         e.getServletContext().setAttribute(DatabaseUtils.class.getName(), dbUtils);
         AuthController authController = new AuthController();
         e.getServletContext().setAttribute(AuthController.class.getName(), authController);
+        UnitSynchronizationService unitSynchronizationService = new UnitSynchronizationServiceImpl();
+        e.getServletContext().setAttribute(UnitSynchronizationService.class.getName(), unitSynchronizationService);
     }
 
     public void contextDestroyed(ServletContextEvent e) {

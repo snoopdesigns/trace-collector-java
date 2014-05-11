@@ -8,6 +8,7 @@ import org.apache.http.HeaderElement;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.entity.StringEntity;
@@ -26,7 +27,10 @@ public class HttpUtils {
 
     private static final String HTTP_PROTOCOL = "http://";
     private static final String COLON = ":";
+    private static final String Q = "?";
+    private static final String SYNC_ID_PARAM = "id";
     private static final String UNIT_URL_CONTEXT = "/unit";
+    private static final String SYNC_URL_CONTEXT = "/unit/sync";
 
     private static Gson gson = new Gson();
 
@@ -68,7 +72,7 @@ public class HttpUtils {
         }
     }
 
-    public static String buildURL(Host host) {
+    public static String buildURLForUnit(Host host) {
         StringBuilder sb = new StringBuilder();
         sb.append(HTTP_PROTOCOL);
         sb.append(host.getIp());
@@ -76,6 +80,37 @@ public class HttpUtils {
         sb.append(host.getPort());
         sb.append(UNIT_URL_CONTEXT);
         return sb.toString();
+    }
+
+    public static String buildURLForSync(Host host, String syncid) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(HTTP_PROTOCOL);
+        sb.append(host.getIp());
+        sb.append(COLON);
+        sb.append(host.getPort());
+        sb.append(SYNC_URL_CONTEXT);
+        sb.append(Q);
+        sb.append(SYNC_ID_PARAM);
+        sb.append("=");
+        sb.append(syncid);
+        return sb.toString();
+    }
+
+    public static boolean checkURLAvailable(URL url) {
+        boolean result = false;
+        try {
+            HttpClient client = getThreadSafeClient();
+            HttpGet get = new HttpGet(url.toURI());
+            logger.info("Checking address available:" + url);
+            HttpResponse response = client.execute(get);
+            if(response.getStatusLine().getStatusCode() == 200) {
+                result = true;
+            }
+        } catch (Exception e) {
+            result = false;
+            logger.info("Host is unavailable!");
+        }
+        return result;
     }
 
     private static DefaultHttpClient getThreadSafeClient()  {

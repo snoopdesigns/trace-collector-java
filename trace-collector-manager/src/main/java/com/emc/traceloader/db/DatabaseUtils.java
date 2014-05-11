@@ -89,7 +89,7 @@ public class DatabaseUtils {
         try {
         for(Host host : this.getAllHosts(userLogin)) {
             if(host.isSelected()) {
-                result.add(new URL(HttpUtils.buildURL(host)));
+                result.add(new URL(HttpUtils.buildURLForUnit(host)));
             }
         }
         } catch (MalformedURLException e) {

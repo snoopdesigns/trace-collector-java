@@ -1,5 +1,8 @@
 package com.emc.traceloader.tracecollector.unit;
 
+import com.emc.traceloader.tracecollector.unit.synchronization.service.SynchronizationService;
+import com.emc.traceloader.tracecollector.unit.synchronization.service.impl.SynchronizationServiceImpl;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,6 +17,7 @@ public class TraceLoaderContextListener implements ServletContextListener {
         logger.info("Context initialized!");
         ServletContext sc = servletContextEvent.getServletContext();
         sc.setAttribute(CmdHandler.class.toString(), new CmdHandler());
+        sc.setAttribute(SynchronizationService.class.toString(), new SynchronizationServiceImpl());
     }
 
     @Override
