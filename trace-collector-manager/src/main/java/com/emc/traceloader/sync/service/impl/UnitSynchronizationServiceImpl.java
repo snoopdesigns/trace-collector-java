@@ -11,6 +11,9 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
@@ -20,6 +23,7 @@ public class UnitSynchronizationServiceImpl implements UnitSynchronizationServic
     private static final Logger logger = Logger.getLogger(UnitSynchronizationServiceImpl.class.getName());
     private static final Integer HEARTBEAT_INTERVAL = 10000;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private Map<String, Runnable> syncThreads = new HashMap<String, Runnable>();
     private DatabaseUtils dbUtils;
 
     public UnitSynchronizationServiceImpl(DatabaseUtils dbUtils) {
@@ -46,11 +50,31 @@ public class UnitSynchronizationServiceImpl implements UnitSynchronizationServic
     public void monitorSync(Host host, String userLogin) {
         try {
             logger.info("Starting monitoring for host: " + host);
-            executor.submit(new SyncMonitor(host, userLogin));
+            SyncMonitor monitor = new SyncMonitor(host, userLogin);
+            syncThreads.put(host.getSyncid(), monitor);
+            executor.submit(monitor);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void stopMonitoring(String syncid) {
+        SyncMonitor monitor = (SyncMonitor)syncThreads.get(syncid);
+        monitor.stop();
+        logger.info("Monitoring stopped for syncid = " + syncid); //here we need to maybe send request to unit to stop sending heartbeats
+    }
+
+    @Override
+    public void destroy() {
+        Iterator it = this.syncThreads.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry)it.next();
+            SyncMonitor monitor = (SyncMonitor)pairs.getValue();
+            monitor.stop();
+        }
+        executor.shutdown();
     }
 
     private String makeSHA1Hash(String input) {
@@ -76,6 +100,7 @@ public class UnitSynchronizationServiceImpl implements UnitSynchronizationServic
 
         private Host host;
         private String userLogin;
+        private boolean stopped = false;
 
         public SyncMonitor(Host host, String userLogin) {
             this.host = host;
@@ -86,7 +111,7 @@ public class UnitSynchronizationServiceImpl implements UnitSynchronizationServic
         public void run() {
             try {
                 HttpUtils.sendSyncRequest(new URL(HttpUtils.buildURLForSync(host, host.getSyncid(), HEARTBEAT_INTERVAL)));
-                while(true) {
+                while(!stopped) {
                     try {
                         Thread.sleep(HEARTBEAT_INTERVAL / 2);
                         if(isWaitingTimeExceeded()) {
@@ -113,6 +138,10 @@ public class UnitSynchronizationServiceImpl implements UnitSynchronizationServic
                 result = true;
             }
             return result;
+        }
+
+        public void stop() {
+            this.stopped = true;
         }
     }
 }

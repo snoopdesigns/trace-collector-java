@@ -28,5 +28,8 @@ public class ManagerContextListener implements ServletContextListener {
         DatabaseUtils dbUtils =
                 (DatabaseUtils)e.getServletContext().getAttribute(DatabaseUtils.class.getName());
         dbUtils.destroy();
+        UnitSynchronizationService unitSynchronizationService =
+                (UnitSynchronizationService)e.getServletContext().getAttribute(UnitSynchronizationService.class.getName());
+        unitSynchronizationService.destroy();
     }
 }

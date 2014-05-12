@@ -1,6 +1,7 @@
 package com.emc.traceloader.db;
 
 import com.emc.traceloader.auth.SessionParameters;
+import com.emc.traceloader.sync.service.UnitSynchronizationService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +19,7 @@ public class DatabaseFunctionsServlet extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(DatabaseFunctionsServlet.class.toString());
 
-    private static final String DELTE_ACTION = "delete";
+    private static final String DELETE_ACTION = "delete";
     private static final String SELECT_FUNCTION = "select";
 
     @Override
@@ -26,10 +27,14 @@ public class DatabaseFunctionsServlet extends HttpServlet {
 
         DatabaseUtils dbUtils =
                 (DatabaseUtils)getServletContext().getAttribute(DatabaseUtils.class.getName());
+        UnitSynchronizationService unitSynchronizationService =
+                (UnitSynchronizationService)getServletContext().getAttribute(UnitSynchronizationService.class.getName());
         if(request.getParameter("action") != null) {
-            if(request.getParameter("action").equals(DELTE_ACTION)) {
+            if(request.getParameter("action").equals(DELETE_ACTION)) {
                 dbUtils.deleteHost(Long.valueOf(request.getParameter("id")),
                         (String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM));
+                unitSynchronizationService.stopMonitoring(dbUtils.getHostById(Long.valueOf(request.getParameter("id")),
+                        (String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM)).getSyncid());
             } else if(request.getParameter("action").equals(SELECT_FUNCTION)) {
                 dbUtils.setHostSelected(Long.valueOf(request.getParameter("id")),
                         (String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM),

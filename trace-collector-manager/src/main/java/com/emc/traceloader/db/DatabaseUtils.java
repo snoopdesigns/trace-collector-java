@@ -1,7 +1,9 @@
 package com.emc.traceloader.db;
 
+import com.emc.traceloader.Stats;
 import com.emc.traceloader.db.entity.Host;
 import com.emc.traceloader.db.entity.HostStatus;
+import com.emc.traceloader.db.entity.SystemStatus;
 import com.emc.traceloader.db.entity.User;
 import com.emc.traceloader.httputils.HttpUtils;
 
@@ -11,7 +13,9 @@ import javax.persistence.Query;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseUtils {
 
@@ -64,6 +68,21 @@ public class DatabaseUtils {
         }
     }
 
+    public Host getHostById(Long id, String userLogin) {
+        try {
+            User user  = (User)em.find(User.class, this.getUserIdByLogin(userLogin));
+            List<Host> list = user.getHosts();
+            for(Host host : list) {
+                if(host.getId().compareTo(id) == 0) {
+                    return host;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void setHostSelected(Long id, String userLogin, boolean selected) {
         try {
             User user  = (User)em.find(User.class, this.getUserIdByLogin(userLogin));
@@ -108,6 +127,23 @@ public class DatabaseUtils {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public Stats buildStats(String userLogin) {
+        Stats stats = new Stats();
+        Map<HostStatus, Host> hostsStatusMap = new HashMap<HostStatus, Host>();
+        List<Host> hosts = this.getAllHosts(userLogin);
+        for(Host host : hosts) {
+            hostsStatusMap.put(host.getStatus(), host);
+        }
+        if(!hostsStatusMap.containsKey(HostStatus.WARNING) && !hostsStatusMap.containsKey(HostStatus.FATAL)) {
+            stats.setSystemStatus(SystemStatus.OPERATIONAL);
+        } else {
+            stats.setSystemStatus(SystemStatus.WARNING);
+        }
+        stats.setHostStatus(hostsStatusMap);
+        stats.setTotal(hosts.size());
+        return stats;
     }
 
     private Long getUserIdByLogin(String userLogin) {

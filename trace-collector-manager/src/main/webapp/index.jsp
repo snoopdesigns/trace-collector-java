@@ -5,6 +5,7 @@
 <%@page import="java.util.Set"%>
 <%@page import="com.emc.traceloader.db.DatabaseUtils"%>
 <%@page import="com.emc.traceloader.db.entity.Host"%>
+<%@page import="com.emc.traceloader.db.entity.HostStatus"%>
 <%@page import="com.emc.traceloader.auth.SessionParameters"%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
@@ -102,10 +103,7 @@
 					</div>
 					<div class="box">
 						<h2>System Status</h2>
-						<div class="utils">
-							<a href="#">View More</a>
-						</div>
-						<p class="center">OPERATIONAL</p>
+						<%=dbUtils.buildStats(user_id).buildSystemStats()%>
 					</div>
                     <div class="box">
                         <h2>Controls</h2>
@@ -151,7 +149,7 @@
                             <tbody>
                             <%  for(Host host : dbUtils.getAllHosts(user_id)) { %>
                                 <tr>
-                                    <td><input type="checkbox"
+                                    <td><input type="checkbox" <% if(host.getStatus() != HostStatus.OPERATIONAL) { %>disabled="disabled"<% } %>
                                         onclick='handleClick(this,<%=host.getId()%>);'<%if(host.isSelected()){%>checked<%}%>/></td>
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>
