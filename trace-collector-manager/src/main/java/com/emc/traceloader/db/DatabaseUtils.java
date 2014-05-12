@@ -1,6 +1,7 @@
 package com.emc.traceloader.db;
 
 import com.emc.traceloader.db.entity.Host;
+import com.emc.traceloader.db.entity.HostStatus;
 import com.emc.traceloader.db.entity.User;
 import com.emc.traceloader.httputils.HttpUtils;
 
@@ -68,6 +69,17 @@ public class DatabaseUtils {
             User user  = (User)em.find(User.class, this.getUserIdByLogin(userLogin));
             em.getTransaction().begin();
             user.setHostSelected(id, selected);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setHostStatus(Long id, String userLogin, HostStatus status) {
+        try {
+            User user  = (User)em.find(User.class, this.getUserIdByLogin(userLogin));
+            em.getTransaction().begin();
+            user.setHostStatus(id, status);
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

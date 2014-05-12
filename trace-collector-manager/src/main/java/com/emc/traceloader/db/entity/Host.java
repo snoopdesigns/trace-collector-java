@@ -1,8 +1,5 @@
 package com.emc.traceloader.db.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.io.Serializable;
 
 public class Host implements Serializable{
@@ -11,15 +8,33 @@ public class Host implements Serializable{
     private Long id;
     private String ip;
     private String port;
+    private String syncid;
+    private HostStatus status;
     private boolean selected;
 
     public Host() {
     }
-
     public Host(String ip, String port) {
         this.ip = ip;
         this.port = port;
         this.selected = false;
+        this.status = HostStatus.OPERATIONAL;
+    }
+
+    public HostStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(HostStatus status) {
+        this.status = status;
+    }
+
+    public String getSyncid() {
+        return syncid;
+    }
+
+    public void setSyncid(String syncid) {
+        this.syncid = syncid;
     }
 
     public boolean isSelected() {
@@ -60,6 +75,8 @@ public class Host implements Serializable{
                 "id=" + id +
                 ", ip='" + ip + '\'' +
                 ", port='" + port + '\'' +
+                ", syncid='" + syncid + '\'' +
+                ", selected=" + selected +
                 '}';
     }
 }

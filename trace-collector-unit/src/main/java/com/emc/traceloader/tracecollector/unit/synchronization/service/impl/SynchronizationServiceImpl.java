@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -19,11 +18,11 @@ public class SynchronizationServiceImpl implements SynchronizationService {
     private Map<String, Runnable> syncThreads = new HashMap<String, Runnable>();
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     @Override
-    public void startSynchronization(String syncid, URL managerUrl) {
+    public void startSynchronization(String syncid, Integer heartbeatInterval, URL managerUrl) {
         logger.info("Requesting synchronization start with syncid = " + syncid);
         logger.info("Manager URL: " + managerUrl) ;
         SynchronizationThread thread = new SynchronizationThread(managerUrl, syncid);
-        executor.scheduleAtFixedRate(thread, 0, 10000, TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate(thread, 0, heartbeatInterval, TimeUnit.MILLISECONDS);
         syncThreads.put(syncid, thread);
     }
 
@@ -44,7 +43,6 @@ public class SynchronizationServiceImpl implements SynchronizationService {
 
         @Override
         public void run() {
-            logger.info("sending heartbeat to: " + managerUrl);
             HttpUtils.sendHeartbeat(syncid, managerUrl);
         }
     }

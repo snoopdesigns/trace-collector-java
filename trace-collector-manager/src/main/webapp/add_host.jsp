@@ -4,7 +4,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Set"%>
 <%@page import="com.emc.traceloader.db.DatabaseUtils"%>
-<%@page import="com.emc.traceloader.sync.UnitSynchronizationService"%>
+<%@page import="com.emc.traceloader.sync.service.UnitSynchronizationService"%>
 <%@page import="com.emc.traceloader.db.entity.Host"%>
 <%@page import="com.emc.traceloader.auth.SessionParameters"%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -30,7 +30,10 @@
         if (req_params.size() > 1) {
             Host host = new Host(request.getParameter("ip_address"), request.getParameter("port"));
             if(syncService.checkUnitAvailable(host)) {
+                String syncid = syncService.generateSyncId(host);
+                host.setSyncid(syncid);
                 dbUtils.addHost(host, user_id);
+                syncService.monitorSync(host, user_id);
                 entryAddedSuccess = true;
             } else {
                 entryAddedError = true;

@@ -15,7 +15,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
 
 import java.net.URL;
 import java.util.List;
@@ -28,7 +27,9 @@ public class HttpUtils {
     private static final String HTTP_PROTOCOL = "http://";
     private static final String COLON = ":";
     private static final String Q = "?";
+    private static final String AMPERSAND = "&";
     private static final String SYNC_ID_PARAM = "id";
+    private static final String INTERVAL_PARAM = "interval";
     private static final String UNIT_URL_CONTEXT = "/unit";
     private static final String SYNC_URL_CONTEXT = "/unit/sync";
 
@@ -82,17 +83,25 @@ public class HttpUtils {
         return sb.toString();
     }
 
-    public static String buildURLForSync(Host host, String syncid) {
+    public static String buildURLForSync(Host host, String syncid, Integer heartbeatInterval) {
         StringBuilder sb = new StringBuilder();
         sb.append(HTTP_PROTOCOL);
         sb.append(host.getIp());
         sb.append(COLON);
         sb.append(host.getPort());
         sb.append(SYNC_URL_CONTEXT);
-        sb.append(Q);
-        sb.append(SYNC_ID_PARAM);
-        sb.append("=");
-        sb.append(syncid);
+        if(syncid != null) {
+            sb.append(Q);
+            sb.append(SYNC_ID_PARAM);
+            sb.append("=");
+            sb.append(syncid);
+        }
+        if(heartbeatInterval != null) {
+            sb.append(AMPERSAND);
+            sb.append(INTERVAL_PARAM);
+            sb.append("=");
+            sb.append(heartbeatInterval);
+        }
         return sb.toString();
     }
 
@@ -111,6 +120,16 @@ public class HttpUtils {
             logger.info("Host is unavailable!");
         }
         return result;
+    }
+
+    public static void sendSyncRequest(URL url) {
+        try {
+            HttpClient client = getThreadSafeClient();
+            HttpGet get = new HttpGet(url.toURI());
+            HttpResponse response = client.execute(get);
+        } catch (Exception e) {
+            logger.info("Host is unavailable!");
+        }
     }
 
     private static DefaultHttpClient getThreadSafeClient()  {

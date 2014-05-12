@@ -1,5 +1,7 @@
 package com.emc.traceloader.sync;
 
+import com.emc.traceloader.sync.service.impl.HeartbeatRegister;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,9 +20,10 @@ public class SynchronizationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        UnitSynchronizationService syncUtils =
-                (UnitSynchronizationService)getServletContext().getAttribute(UnitSynchronizationService.class.getName());
-        logger.info("Received heartbeat from: " + request.getParameter("id"));
+        if(request.getParameter("id") != null) {
+            HeartbeatRegister.getInstance().newHeartbeatReceived(request.getParameter("id"));
+        } else {
+            logger.info("Received heartbeat from unknown syncid!");
+        }
     }
 }

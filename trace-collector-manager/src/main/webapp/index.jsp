@@ -145,6 +145,7 @@
                                     <th>Select</th>
                             	    <th>IP address</th>
                             		<th>Port</th>
+                            		<th>Status</th>
                             	</tr>
                             </thead>
                             <tbody>
@@ -154,6 +155,7 @@
                                         onclick='handleClick(this,<%=host.getId()%>);'<%if(host.isSelected()){%>checked<%}%>/></td>
                                     <td><%=host.getIp()%></td>
                                     <td><%=host.getPort()%></td>
+                                    <td><%=host.getStatus()%></td>
                                 </tr>
                             <%  }  %>
                             </tbody>

@@ -4,6 +4,6 @@ import java.net.URL;
 
 public interface SynchronizationService {
 
-    public void startSynchronization(String syncid, URL managerUrl);
+    public void startSynchronization(String syncid, Integer heartbeatInterval, URL managerUrl);
     public void stopSynchronization(String syncid);
 }
