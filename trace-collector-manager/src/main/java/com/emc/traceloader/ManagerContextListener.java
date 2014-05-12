@@ -2,6 +2,8 @@ package com.emc.traceloader;
 
 import com.emc.traceloader.auth.AuthController;
 import com.emc.traceloader.db.DatabaseUtils;
+import com.emc.traceloader.keeperservice.KeeperService;
+import com.emc.traceloader.keeperservice.impl.KeeperServiceImpl;
 import com.emc.traceloader.sync.service.UnitSynchronizationService;
 import com.emc.traceloader.sync.service.impl.UnitSynchronizationServiceImpl;
 
@@ -18,10 +20,10 @@ public class ManagerContextListener implements ServletContextListener {
                 Persistence.createEntityManagerFactory("$objectdb/db/manager.odb");
         DatabaseUtils dbUtils = new DatabaseUtils(emf);
         e.getServletContext().setAttribute(DatabaseUtils.class.getName(), dbUtils);
-        AuthController authController = new AuthController();
-        e.getServletContext().setAttribute(AuthController.class.getName(), authController);
         UnitSynchronizationService unitSynchronizationService = new UnitSynchronizationServiceImpl(dbUtils);
         e.getServletContext().setAttribute(UnitSynchronizationService.class.getName(), unitSynchronizationService);
+        KeeperService keeperService = new KeeperServiceImpl();
+        e.getServletContext().setAttribute(KeeperService.class.getName(), keeperService);
     }
 
     public void contextDestroyed(ServletContextEvent e) {

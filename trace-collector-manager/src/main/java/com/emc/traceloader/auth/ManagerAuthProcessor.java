@@ -3,6 +3,7 @@ package com.emc.traceloader.auth;
 import com.emc.traceloader.db.DatabaseUtils;
 import com.emc.traceloader.db.entity.User;
 import com.emc.traceloader.keeper.api.AuthInfo;
+import com.emc.traceloader.keeperservice.KeeperService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,12 +25,12 @@ public class ManagerAuthProcessor extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        AuthController authController = (AuthController)getServletContext().getAttribute(AuthController.class.getName());
+        KeeperService keeperService = (KeeperService)getServletContext().getAttribute(KeeperService.class.getName());
         DatabaseUtils databaseUtils = (DatabaseUtils)getServletContext().getAttribute(DatabaseUtils.class.getName());
         if(request.getParameter("login") != null && request.getParameter("password") != null &&
                 request.getParameter("keeper_url") != null) {
-            AuthInfo authInfo = authController.requestAuthorization(request.getParameter("keeper_url"),
-                    request.getParameter("login"), request.getParameter("password"));
+            keeperService.setKeeperUrl(request.getParameter("keeper_url"));
+            AuthInfo authInfo = keeperService.requestAuthorization(request.getParameter("login"), request.getParameter("password"));
 
             if(authInfo != null && authInfo.getStatus() == 0) {
                 request.getSession().setAttribute(SessionParameters.SESSION_ID_PARAM, authInfo.getSession_id());

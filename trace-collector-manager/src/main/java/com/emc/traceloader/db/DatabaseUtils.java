@@ -117,7 +117,7 @@ public class DatabaseUtils {
         }
     }
 
-    public List<URL> getHostsURLsWithoutSelected(String userLogin) {
+    public List<URL> getHostsURLsOnlySelected(String userLogin) {
         List<URL> result = new ArrayList<URL>();
         try {
         for(Host host : this.getAllHosts(userLogin)) {

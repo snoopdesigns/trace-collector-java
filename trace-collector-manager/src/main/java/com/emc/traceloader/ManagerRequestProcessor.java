@@ -2,6 +2,7 @@ package com.emc.traceloader;
 
 import com.emc.traceloader.auth.SessionParameters;
 import com.emc.traceloader.db.DatabaseUtils;
+import com.emc.traceloader.keeperservice.KeeperService;
 import com.emc.traceloader.unit.api.CmdEntity;
 
 import javax.servlet.ServletException;
@@ -19,20 +20,20 @@ import java.util.logging.Logger;
 public class ManagerRequestProcessor extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(ManagerRequestProcessor.class.toString());
-    private ManagerController controller = new ManagerController();
+    private ManagerController controller = null;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        DatabaseUtils dbUtils =
-                (DatabaseUtils)getServletContext().getAttribute(DatabaseUtils.class.getName());
-        logger.info("Execute select: " + dbUtils.getAllHosts((String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM)));
-
-        logger.info("GET request received! PATH:" + request.getContextPath());
+        if(controller == null) {
+            KeeperService keeperService = (KeeperService)getServletContext().getAttribute(KeeperService.class.getName());
+            DatabaseUtils dbUtils = (DatabaseUtils)getServletContext().getAttribute(DatabaseUtils.class.getName());
+            controller = new ManagerController(keeperService, dbUtils);
+        }
         if(!request.getParameterMap().isEmpty()) {
             logger.info("Parsing user request...");
-            CmdEntity cmd = controller.parseUIRequest(request);
-            controller.sendCommand(cmd, dbUtils.getHostsURLsWithoutSelected((String) request.getSession().getAttribute(SessionParameters.USER_ID_PARAM)));
+            CmdEntity cmd = controller.parseUIRequest(request, (String)request.getSession().getAttribute(SessionParameters.KEEPER_URL_PARAM));
+            controller.processCommand(cmd, (String)request.getSession().getAttribute(SessionParameters.SESSION_ID_PARAM),
+                    request.getParameter("group_name"));
         }
         request.getRequestDispatcher("").forward(request, response); //process jsp page
     }

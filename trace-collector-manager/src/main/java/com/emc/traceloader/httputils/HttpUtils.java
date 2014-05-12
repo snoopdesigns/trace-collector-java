@@ -36,7 +36,7 @@ public class HttpUtils {
 
     private static Gson gson = new Gson();
 
-    public static void sendCommand(CmdEntity cmd, List<URL> urls) {
+    public static void sendCommand(CmdEntity cmd, List<URL> urls, final String cookieString) {
         try {
             HttpClient client = getThreadSafeClient();
             for(URL url : urls) {
@@ -59,6 +59,22 @@ public class HttpUtils {
                     @Override
                     public String getValue() {
                         return "application/json";
+                    }
+
+                    @Override
+                    public HeaderElement[] getElements() throws ParseException {
+                        return new HeaderElement[0];
+                    }
+                });
+                post.setHeader(new Header() {
+                    @Override
+                    public String getName() {
+                        return "Set-Cookie";
+                    }
+
+                    @Override
+                    public String getValue() {
+                        return cookieString;
                     }
 
                     @Override
@@ -89,11 +105,33 @@ public class HttpUtils {
             });
             HttpResponse response = client.execute(post);
             Header header = response.getFirstHeader("Set-Cookie");
-            sessionId = header.getValue();
+            sessionId = header.getValue().split("=")[1];
         } catch (Exception e) {
             e.printStackTrace();
         }
         return sessionId;
+    }
+
+    public static String sendKeeperGroupRequest(URL keeperUrl, final String groupName, final String sessionId) {
+        String groupId = null;
+        try {
+            HttpClient client = getThreadSafeClient();
+            HttpPost post = new HttpPost(keeperUrl.toURI());
+            post.setHeader(new Header() {
+                @Override
+                public String getName() {return "Cookie";}
+                @Override
+                public String getValue() {return "GNAME=" + groupName + ";SID="+sessionId;}
+                @Override
+                public HeaderElement[] getElements() throws ParseException {return new HeaderElement[0];}
+            });
+            HttpResponse response = client.execute(post);
+            Header header = response.getFirstHeader("Set-Cookie");
+            groupId = header.getValue().split("=")[1];
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return groupId;
     }
 
     public static String buildURLForUnit(Host host) {

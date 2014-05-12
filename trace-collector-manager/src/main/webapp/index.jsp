@@ -33,34 +33,29 @@
 
     <script>
         function startCollectingCmd() {
-            var send_politic = document.getElementById("send_politic").value;
             var send_interval = document.getElementById("send_interval").value;
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", "/mgr?cmd_type=START_COLLECTING&postback_ip=<%=(String)session.getAttribute(SessionParameters.KEEPER_URL_PARAM)%>&send_interval="+
-                send_interval+"&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false);
+            xmlHttp.open( "GET", "/mgr?cmd_type=START_COLLECTING&send_interval="+send_interval+"&log_entity_per_msg=10", false);
             xmlHttp.send( null );
             document.getElementById("success_msg").innerHTML = '<p class="success">START command success</p>';
         }
 
         function stopCollectingCmd() {
-            var send_politic = document.getElementById("send_politic").value;
             var send_interval = document.getElementById("send_interval").value;
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", "/mgr?cmd_type=STOP_COLLECTING&postback_ip=<%=(String)session.getAttribute(SessionParameters.KEEPER_URL_PARAM)%>&send_interval="+
-                send_interval+"&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false);
+            xmlHttp.open( "GET", "/mgr?cmd_type=STOP_COLLECTING&send_interval="+send_interval+"&log_entity_per_msg=10", false);
             xmlHttp.send( null );
             document.getElementById("success_msg").innerHTML = '<p class="success">STOP command success</p>';
                 }
 
         function sendCmd() {
-            var send_politic = document.getElementById("send_politic").value;
             var send_interval = document.getElementById("send_interval").value;
+            var group_name = document.getElementById("group_name").value;
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", "/mgr?cmd_type=SEND&postback_ip=<%=(String)session.getAttribute(SessionParameters.KEEPER_URL_PARAM)%>&send_interval="+
-            send_interval+"&send_politic="+send_politic+"&log_entity_per_msg=10&requested_luns=1,2,3", false);
+            xmlHttp.open( "GET", "/mgr?cmd_type=SEND&send_interval="+send_interval+"&log_entity_per_msg=10&group_name="+group_name, false);
             xmlHttp.send( null );
             document.getElementById("success_msg").innerHTML = '<p class="success">SEND command success</p>';
         }
@@ -114,15 +109,12 @@
                             <!--<p class="success">New host successfully added.</p>-->
                         </div>
                             <p>
-                                <label for="title">Send politic</label>
-                                <select id="send_politic">
-                                    <option value="SEND_ON_END">Send traces on end</option>
-                                	<option value="SEND_ON_END">Send traces continiously</option>
-                                </select>
-                            </p>
-                            <p>
                                 <label for="post">Send interval</label>
                                 <input id="send_interval" type="text" name="send_interval" />
+                            </p>
+                            <p>
+                                <label for="post">Application name</label>
+                                <input id="group_name" type="text" name="group_name" />
                             </p>
                             <p>
                                 <input type="submit" value="Start" onclick="startCollectingCmd()"/>

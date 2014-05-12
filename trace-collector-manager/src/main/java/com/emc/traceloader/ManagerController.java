@@ -1,6 +1,8 @@
 package com.emc.traceloader;
 
+import com.emc.traceloader.db.DatabaseUtils;
 import com.emc.traceloader.httputils.HttpUtils;
+import com.emc.traceloader.keeperservice.KeeperService;
 import com.emc.traceloader.unit.api.CmdEntity;
 import com.emc.traceloader.unit.api.ControlCmdType;
 import com.emc.traceloader.unit.api.Politics;
@@ -25,33 +27,40 @@ public class ManagerController {
 
     private static Logger logger = Logger.getLogger(ManagerController.class.toString());
 
+    private KeeperService keeperService;
+    private DatabaseUtils dbUtils;
+
     private static final String PARAM_CMD_TYPE = "cmd_type";
-    private static final String PARAM_SEND_POLITIC = "send_politic";
     private static final String PARAM_LOG_ENTITY_PER_MSG = "log_entity_per_msg";
     private static final String PARAM_SEND_INTERVAL = "send_interval";
-    private static final String PARAM_POSTBACK_IP = "postback_ip";
-    private static final String PARAM_REQUESTED_LUNS = "requested_luns"; //comma separated data
 
-    public CmdEntity parseUIRequest(HttpServletRequest request) {
+    public ManagerController(KeeperService keeperService, DatabaseUtils dbUtils) {
+        this.keeperService = keeperService;
+        this.dbUtils = dbUtils;
+    }
+
+    public CmdEntity parseUIRequest(HttpServletRequest request, String postback_ip) {
         CmdEntity cmd = new CmdEntity();
         if(request.getParameter(PARAM_CMD_TYPE) != null &&
                 request.getParameter(PARAM_LOG_ENTITY_PER_MSG) != null &&
-                request.getParameter(PARAM_POSTBACK_IP) != null &&
-                request.getParameter(PARAM_REQUESTED_LUNS) != null &&
-                request.getParameter(PARAM_SEND_INTERVAL) != null &&
-                request.getParameter(PARAM_SEND_POLITIC) != null) {
+                request.getParameter(PARAM_SEND_INTERVAL) != null) {
             cmd.setCmd_type(ControlCmdType.valueOf(request.getParameter(PARAM_CMD_TYPE)));
-            cmd.setSend_politic(Politics.valueOf(request.getParameter(PARAM_SEND_POLITIC)));
             cmd.setLog_entity_per_msg(Integer.valueOf(request.getParameter(PARAM_LOG_ENTITY_PER_MSG)));
             cmd.setSend_interval(Integer.valueOf(request.getParameter(PARAM_SEND_INTERVAL)));
-            cmd.setPostback_ip(request.getParameter(PARAM_POSTBACK_IP));
-            List<String> luns = Arrays.asList(request.getParameter(PARAM_REQUESTED_LUNS).split(","));
-            cmd.setRequested_luns(luns);
+            cmd.setPostback_ip(postback_ip);
         }
         return cmd;
     }
 
-    public void sendCommand(CmdEntity cmd, List<URL> urls) {
-        HttpUtils.sendCommand(cmd, urls);
+    public void processCommand(CmdEntity cmd, String sessionId, String groupName) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SID=");
+        sb.append(sessionId);
+        if(cmd.getCmd_type() == ControlCmdType.SEND) {
+            String groupId = keeperService.requestGroupId(sessionId, groupName);
+            sb.append("GID=");
+            sb.append(groupId);
+        }
+        HttpUtils.sendCommand(cmd, dbUtils.getHostsURLsOnlySelected(sessionId), sb.toString());
     }
 }
