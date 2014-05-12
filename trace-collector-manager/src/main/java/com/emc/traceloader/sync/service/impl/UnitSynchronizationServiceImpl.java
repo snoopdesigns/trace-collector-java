@@ -34,7 +34,7 @@ public class UnitSynchronizationServiceImpl implements UnitSynchronizationServic
     public boolean checkUnitAvailable(Host host) {
         URL unitUrl = null;
         try {
-            unitUrl = new URL(HttpUtils.buildURLForSync(host, null, null));
+            unitUrl = new URL(HttpUtils.buildURLForSync(host, null, null, null));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -60,10 +60,15 @@ public class UnitSynchronizationServiceImpl implements UnitSynchronizationServic
     }
 
     @Override
-    public void stopMonitoring(String syncid) {
-        SyncMonitor monitor = (SyncMonitor)syncThreads.get(syncid);
+    public void stopMonitoring(Host host) {
+        SyncMonitor monitor = (SyncMonitor)syncThreads.get(host.getSyncid());
         monitor.stop();
-        logger.info("Monitoring stopped for syncid = " + syncid); //here we need to maybe send request to unit to stop sending heartbeats
+        logger.info("Monitoring stopped for syncid = " + host.getSyncid());
+        try {
+            HttpUtils.sendSyncRequest(new URL(HttpUtils.buildURLForSync(host, host.getSyncid(), null, "stop")));//here we need to maybe send request to unit to stop sending heartbeats
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -110,14 +115,14 @@ public class UnitSynchronizationServiceImpl implements UnitSynchronizationServic
         @Override
         public void run() {
             try {
-                HttpUtils.sendSyncRequest(new URL(HttpUtils.buildURLForSync(host, host.getSyncid(), HEARTBEAT_INTERVAL)));
+                HttpUtils.sendSyncRequest(new URL(HttpUtils.buildURLForSync(host, host.getSyncid(), HEARTBEAT_INTERVAL, "start")));
                 while(!stopped) {
                     try {
                         Thread.sleep(HEARTBEAT_INTERVAL / 2);
                         if(isWaitingTimeExceeded()) {
                             logger.info("Waiting time exceeded for host: " + host);
                             dbUtils.setHostStatus(host.getId(), userLogin, HostStatus.FATAL);
-                            HttpUtils.sendSyncRequest(new URL(HttpUtils.buildURLForSync(host, host.getSyncid(), HEARTBEAT_INTERVAL)));
+                            HttpUtils.sendSyncRequest(new URL(HttpUtils.buildURLForSync(host, host.getSyncid(), HEARTBEAT_INTERVAL, "start")));
                         } else {
                             dbUtils.setHostStatus(host.getId(), userLogin, HostStatus.OPERATIONAL);
                         }

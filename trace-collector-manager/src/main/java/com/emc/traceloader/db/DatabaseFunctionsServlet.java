@@ -1,6 +1,7 @@
 package com.emc.traceloader.db;
 
 import com.emc.traceloader.auth.SessionParameters;
+import com.emc.traceloader.db.entity.Host;
 import com.emc.traceloader.sync.service.UnitSynchronizationService;
 
 import javax.servlet.ServletException;
@@ -34,8 +35,9 @@ public class DatabaseFunctionsServlet extends HttpServlet {
                 if(unitSynchronizationService == null) {
                     logger.info("FUUUUUUUUUUUUUUUU");
                 }
-                unitSynchronizationService.stopMonitoring(dbUtils.getHostById(Long.valueOf(request.getParameter("id")),
-                        (String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM)).getSyncid());
+                Host host = dbUtils.getHostById(Long.valueOf(request.getParameter("id")),
+                        (String) request.getSession().getAttribute(SessionParameters.USER_ID_PARAM));
+                unitSynchronizationService.stopMonitoring(host);
                 dbUtils.deleteHost(Long.valueOf(request.getParameter("id")),
                         (String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM));
             } else if(request.getParameter("action").equals(SELECT_FUNCTION)) {

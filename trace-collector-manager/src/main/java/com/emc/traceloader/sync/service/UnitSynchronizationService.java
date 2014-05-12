@@ -6,6 +6,6 @@ public interface UnitSynchronizationService {
     public boolean checkUnitAvailable(Host host);
     public String generateSyncId(Host host);
     public void monitorSync(Host host, String userLogin);
-    public void stopMonitoring(String syncid);
+    public void stopMonitoring(Host host);
     public void destroy();
 }

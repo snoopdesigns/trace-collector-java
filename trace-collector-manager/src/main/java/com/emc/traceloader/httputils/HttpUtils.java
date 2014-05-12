@@ -30,6 +30,7 @@ public class HttpUtils {
     private static final String AMPERSAND = "&";
     private static final String SYNC_ID_PARAM = "id";
     private static final String INTERVAL_PARAM = "interval";
+    private static final String ACTION_PARAM = "action";
     private static final String UNIT_URL_CONTEXT = "/unit";
     private static final String SYNC_URL_CONTEXT = "/unit/sync";
 
@@ -83,7 +84,7 @@ public class HttpUtils {
         return sb.toString();
     }
 
-    public static String buildURLForSync(Host host, String syncid, Integer heartbeatInterval) {
+    public static String buildURLForSync(Host host, String syncid, Integer heartbeatInterval, String action) {
         StringBuilder sb = new StringBuilder();
         sb.append(HTTP_PROTOCOL);
         sb.append(host.getIp());
@@ -101,6 +102,12 @@ public class HttpUtils {
             sb.append(INTERVAL_PARAM);
             sb.append("=");
             sb.append(heartbeatInterval);
+        }
+        if(action != null) {
+            sb.append(AMPERSAND);
+            sb.append(ACTION_PARAM);
+            sb.append("=");
+            sb.append(action);
         }
         return sb.toString();
     }
