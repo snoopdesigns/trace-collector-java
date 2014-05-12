@@ -1,4 +1,4 @@
-package com.emc.traceloader.sync.service.impl;
+package com.emc.traceloader.service.sync.impl;
 
 import java.util.Date;
 import java.util.HashMap;

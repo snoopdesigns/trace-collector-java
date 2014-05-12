@@ -3,10 +3,12 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Set"%>
-<%@page import="com.emc.traceloader.db.DatabaseUtils"%>
-<%@page import="com.emc.traceloader.db.entity.Host"%>
-<%@page import="com.emc.traceloader.db.entity.HostStatus"%>
-<%@page import="com.emc.traceloader.auth.SessionParameters"%>
+<%@page import="com.emc.traceloader.service.db.impl.entity.HostStatus"%>
+<%@page import="com.emc.traceloader.service.db.DatabaseService"%>
+<%@page import="com.emc.traceloader.service.sync.UnitSynchronizationService"%>
+<%@page import="com.emc.traceloader.service.db.impl.entity.Host"%>
+<%@page import="com.emc.traceloader.session.SessionParameters"%>
+<%@page import="com.emc.traceloader.service.Services"%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -69,9 +71,9 @@
     </script>
 
 	<%
-        DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
-        String session_id = (String)session.getAttribute(SessionParameters.SESSION_ID_PARAM);
-        String user_id = (String)session.getAttribute(SessionParameters.USER_ID_PARAM);
+        DatabaseService dbUtils = Services.databaseUtilsInstance(pageContext.getServletContext());
+        String session_id = SessionParameters.sessionId(session);
+        String user_id = SessionParameters.userId(session);
         if(null == session_id) {
             response.sendRedirect("login.jsp");
         }

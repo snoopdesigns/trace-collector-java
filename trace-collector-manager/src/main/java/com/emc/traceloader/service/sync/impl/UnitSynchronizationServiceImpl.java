@@ -1,10 +1,10 @@
-package com.emc.traceloader.sync.service.impl;
+package com.emc.traceloader.service.sync.impl;
 
-import com.emc.traceloader.db.DatabaseUtils;
-import com.emc.traceloader.db.entity.Host;
-import com.emc.traceloader.db.entity.HostStatus;
+import com.emc.traceloader.service.db.DatabaseService;
+import com.emc.traceloader.service.db.impl.entity.Host;
+import com.emc.traceloader.service.db.impl.entity.HostStatus;
 import com.emc.traceloader.httputils.HttpUtils;
-import com.emc.traceloader.sync.service.UnitSynchronizationService;
+import com.emc.traceloader.service.sync.UnitSynchronizationService;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,9 +24,9 @@ public class UnitSynchronizationServiceImpl implements UnitSynchronizationServic
     private static final Integer HEARTBEAT_INTERVAL = 10000;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private Map<String, Runnable> syncThreads = new HashMap<String, Runnable>();
-    private DatabaseUtils dbUtils;
+    private DatabaseService dbUtils;
 
-    public UnitSynchronizationServiceImpl(DatabaseUtils dbUtils) {
+    public UnitSynchronizationServiceImpl(DatabaseService dbUtils) {
         this.dbUtils = dbUtils;
     }
 

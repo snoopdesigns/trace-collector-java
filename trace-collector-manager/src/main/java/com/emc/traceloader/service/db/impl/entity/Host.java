@@ -1,4 +1,4 @@
-package com.emc.traceloader.db.entity;
+package com.emc.traceloader.service.db.impl.entity;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
 package com.emc.traceloader.httputils;
 
-import com.emc.traceloader.db.entity.Host;
+import com.emc.traceloader.service.db.impl.entity.Host;
 import com.emc.traceloader.unit.api.CmdEntity;
 import com.google.gson.Gson;
 import org.apache.http.Header;

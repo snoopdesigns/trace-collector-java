@@ -1,26 +1,12 @@
 package com.emc.traceloader;
 
-import com.emc.traceloader.db.DatabaseUtils;
+import com.emc.traceloader.service.db.DatabaseService;
 import com.emc.traceloader.httputils.HttpUtils;
-import com.emc.traceloader.keeperservice.KeeperService;
+import com.emc.traceloader.service.keeper.KeeperService;
 import com.emc.traceloader.unit.api.CmdEntity;
 import com.emc.traceloader.unit.api.ControlCmdType;
-import com.emc.traceloader.unit.api.Politics;
-import com.google.gson.Gson;
-import org.apache.http.Header;
-import org.apache.http.HeaderElement;
-import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class ManagerController {
@@ -28,13 +14,13 @@ public class ManagerController {
     private static Logger logger = Logger.getLogger(ManagerController.class.toString());
 
     private KeeperService keeperService;
-    private DatabaseUtils dbUtils;
+    private DatabaseService dbUtils;
 
     private static final String PARAM_CMD_TYPE = "cmd_type";
     private static final String PARAM_LOG_ENTITY_PER_MSG = "log_entity_per_msg";
     private static final String PARAM_SEND_INTERVAL = "send_interval";
 
-    public ManagerController(KeeperService keeperService, DatabaseUtils dbUtils) {
+    public ManagerController(KeeperService keeperService, DatabaseService dbUtils) {
         this.keeperService = keeperService;
         this.dbUtils = dbUtils;
     }
@@ -52,7 +38,7 @@ public class ManagerController {
         return cmd;
     }
 
-    public void processCommand(CmdEntity cmd, String sessionId, String groupName) {
+    public void processCommand(CmdEntity cmd, String sessionId, String groupName, String userLogin) {
         StringBuilder sb = new StringBuilder();
         sb.append("SID=");
         sb.append(sessionId);
@@ -61,6 +47,6 @@ public class ManagerController {
             sb.append("GID=");
             sb.append(groupId);
         }
-        HttpUtils.sendCommand(cmd, dbUtils.getHostsURLsOnlySelected(sessionId), sb.toString());
+        HttpUtils.sendCommand(cmd, dbUtils.getHostsURLsOnlySelected(userLogin), sb.toString());
     }
 }

@@ -1,8 +1,9 @@
 package com.emc.traceloader;
 
-import com.emc.traceloader.auth.SessionParameters;
-import com.emc.traceloader.db.DatabaseUtils;
-import com.emc.traceloader.keeperservice.KeeperService;
+import com.emc.traceloader.service.Services;
+import com.emc.traceloader.service.db.DatabaseService;
+import com.emc.traceloader.session.SessionParameters;
+import com.emc.traceloader.service.keeper.KeeperService;
 import com.emc.traceloader.unit.api.CmdEntity;
 
 import javax.servlet.ServletException;
@@ -20,20 +21,23 @@ import java.util.logging.Logger;
 public class ManagerRequestProcessor extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(ManagerRequestProcessor.class.toString());
+
     private ManagerController controller = null;
+
+    private static final String GROUP_PARAMETER = "group_name";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(controller == null) {
-            KeeperService keeperService = (KeeperService)getServletContext().getAttribute(KeeperService.class.getName());
-            DatabaseUtils dbUtils = (DatabaseUtils)getServletContext().getAttribute(DatabaseUtils.class.getName());
+            KeeperService keeperService = Services.keeperServiceInstance(getServletContext());
+            DatabaseService dbUtils = Services.databaseUtilsInstance(getServletContext());
             controller = new ManagerController(keeperService, dbUtils);
         }
         if(!request.getParameterMap().isEmpty()) {
             logger.info("Parsing user request...");
-            CmdEntity cmd = controller.parseUIRequest(request, (String)request.getSession().getAttribute(SessionParameters.KEEPER_URL_PARAM));
-            controller.processCommand(cmd, (String)request.getSession().getAttribute(SessionParameters.SESSION_ID_PARAM),
-                    request.getParameter("group_name"));
+            CmdEntity cmd = controller.parseUIRequest(request, SessionParameters.keeperUrl(request.getSession()));
+            controller.processCommand(cmd, SessionParameters.sessionId(request.getSession()),
+                    request.getParameter(GROUP_PARAMETER), SessionParameters.userId(request.getSession()));
         }
         request.getRequestDispatcher("").forward(request, response); //process jsp page
     }

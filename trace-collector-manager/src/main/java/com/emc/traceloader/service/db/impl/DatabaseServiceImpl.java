@@ -1,10 +1,11 @@
-package com.emc.traceloader.db;
+package com.emc.traceloader.service.db.impl;
 
-import com.emc.traceloader.Stats;
-import com.emc.traceloader.db.entity.Host;
-import com.emc.traceloader.db.entity.HostStatus;
-import com.emc.traceloader.db.entity.SystemStatus;
-import com.emc.traceloader.db.entity.User;
+import com.emc.traceloader.httputils.Stats;
+import com.emc.traceloader.service.db.DatabaseService;
+import com.emc.traceloader.service.db.impl.entity.Host;
+import com.emc.traceloader.service.db.impl.entity.HostStatus;
+import com.emc.traceloader.service.db.impl.entity.SystemStatus;
+import com.emc.traceloader.service.db.impl.entity.User;
 import com.emc.traceloader.httputils.HttpUtils;
 
 import javax.persistence.EntityManager;
@@ -17,12 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DatabaseUtils {
+public class DatabaseServiceImpl implements DatabaseService {
 
     private EntityManagerFactory emf;
     private EntityManager em;
 
-    public DatabaseUtils(EntityManagerFactory emf) {
+    public DatabaseServiceImpl(EntityManagerFactory emf) {
         this.emf = emf;
         this.em = emf.createEntityManager();
     }

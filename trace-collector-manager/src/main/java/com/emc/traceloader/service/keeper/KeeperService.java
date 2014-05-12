@@ -1,4 +1,4 @@
-package com.emc.traceloader.keeperservice;
+package com.emc.traceloader.service.keeper;
 
 import com.emc.traceloader.keeper.api.AuthInfo;
 

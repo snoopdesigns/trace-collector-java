@@ -1,4 +1,4 @@
-package com.emc.traceloader.db.entity;
+package com.emc.traceloader.service.db.impl.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

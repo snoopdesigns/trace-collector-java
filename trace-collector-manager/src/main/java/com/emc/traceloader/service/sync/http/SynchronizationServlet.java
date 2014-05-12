@@ -1,6 +1,6 @@
-package com.emc.traceloader.sync;
+package com.emc.traceloader.service.sync.http;
 
-import com.emc.traceloader.sync.service.impl.HeartbeatRegister;
+import com.emc.traceloader.service.sync.impl.HeartbeatRegister;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,10 +18,12 @@ public class SynchronizationServlet extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(SynchronizationServlet.class.getName());
 
+    private static final String ID_PARAMETER = "id";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getParameter("id") != null) {
-            HeartbeatRegister.getInstance().newHeartbeatReceived(request.getParameter("id"));
+        if(request.getParameter(ID_PARAMETER) != null) {
+            HeartbeatRegister.getInstance().newHeartbeatReceived(request.getParameter(ID_PARAMETER));
         } else {
             logger.info("Received heartbeat from unknown syncid!");
         }

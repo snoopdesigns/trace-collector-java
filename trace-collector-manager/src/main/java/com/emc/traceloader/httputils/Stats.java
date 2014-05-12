@@ -1,8 +1,8 @@
-package com.emc.traceloader;
+package com.emc.traceloader.httputils;
 
-import com.emc.traceloader.db.entity.Host;
-import com.emc.traceloader.db.entity.HostStatus;
-import com.emc.traceloader.db.entity.SystemStatus;
+import com.emc.traceloader.service.db.impl.entity.Host;
+import com.emc.traceloader.service.db.impl.entity.HostStatus;
+import com.emc.traceloader.service.db.impl.entity.SystemStatus;
 
 import java.util.Iterator;
 import java.util.Map;

@@ -1,10 +1,9 @@
-package com.emc.traceloader.keeperservice.impl;
+package com.emc.traceloader.service.keeper.impl;
 
 import com.emc.traceloader.httputils.HttpUtils;
 import com.emc.traceloader.keeper.api.AuthInfo;
-import com.emc.traceloader.keeperservice.KeeperService;
+import com.emc.traceloader.service.keeper.KeeperService;
 import org.apache.commons.codec.binary.Base64;
-
 import java.net.URL;
 import java.util.logging.Logger;
 

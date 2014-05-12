@@ -1,6 +1,6 @@
-package com.emc.traceloader.sync.service;
+package com.emc.traceloader.service.sync;
 
-import com.emc.traceloader.db.entity.Host;
+import com.emc.traceloader.service.db.impl.entity.Host;
 
 public interface UnitSynchronizationService {
     public boolean checkUnitAvailable(Host host);

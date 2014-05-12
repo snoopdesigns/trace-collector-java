@@ -81,7 +81,7 @@
                         <configuration>
                             <mainClass>com.objectdb.Enhancer</mainClass>
                             <arguments>
-                                <argument>com.emc.traceloader.db.entity.User</argument>
+                                <argument>com.emc.traceloader.service.db.impl.entity.User</argument>
                             </arguments>
                         </configuration>
                     </execution>

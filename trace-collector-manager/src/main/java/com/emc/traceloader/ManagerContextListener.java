@@ -1,12 +1,11 @@
 package com.emc.traceloader;
 
-import com.emc.traceloader.auth.AuthController;
-import com.emc.traceloader.db.DatabaseUtils;
-import com.emc.traceloader.keeperservice.KeeperService;
-import com.emc.traceloader.keeperservice.impl.KeeperServiceImpl;
-import com.emc.traceloader.sync.service.UnitSynchronizationService;
-import com.emc.traceloader.sync.service.impl.UnitSynchronizationServiceImpl;
-
+import com.emc.traceloader.service.db.DatabaseService;
+import com.emc.traceloader.service.db.impl.DatabaseServiceImpl;
+import com.emc.traceloader.service.keeper.KeeperService;
+import com.emc.traceloader.service.keeper.impl.KeeperServiceImpl;
+import com.emc.traceloader.service.sync.UnitSynchronizationService;
+import com.emc.traceloader.service.sync.impl.UnitSynchronizationServiceImpl;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletContextEvent;
@@ -15,11 +14,11 @@ import javax.servlet.ServletContextListener;
 public class ManagerContextListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent e) {
-        com.objectdb.Enhancer.enhance("com.emc.traceloader.db.entity.User");
+        com.objectdb.Enhancer.enhance("com.emc.traceloader.service.db.impl.entity.User");
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("$objectdb/db/manager.odb");
-        DatabaseUtils dbUtils = new DatabaseUtils(emf);
-        e.getServletContext().setAttribute(DatabaseUtils.class.getName(), dbUtils);
+        DatabaseService dbUtils = new DatabaseServiceImpl(emf);
+        e.getServletContext().setAttribute(DatabaseService.class.getName(), dbUtils);
         UnitSynchronizationService unitSynchronizationService = new UnitSynchronizationServiceImpl(dbUtils);
         e.getServletContext().setAttribute(UnitSynchronizationService.class.getName(), unitSynchronizationService);
         KeeperService keeperService = new KeeperServiceImpl();
@@ -27,8 +26,8 @@ public class ManagerContextListener implements ServletContextListener {
     }
 
     public void contextDestroyed(ServletContextEvent e) {
-        DatabaseUtils dbUtils =
-                (DatabaseUtils)e.getServletContext().getAttribute(DatabaseUtils.class.getName());
+        DatabaseService dbUtils =
+                (DatabaseService)e.getServletContext().getAttribute(DatabaseService.class.getName());
         dbUtils.destroy();
         UnitSynchronizationService unitSynchronizationService =
                 (UnitSynchronizationService)e.getServletContext().getAttribute(UnitSynchronizationService.class.getName());

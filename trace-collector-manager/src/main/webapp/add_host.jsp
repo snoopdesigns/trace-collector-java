@@ -3,10 +3,11 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Set"%>
-<%@page import="com.emc.traceloader.db.DatabaseUtils"%>
-<%@page import="com.emc.traceloader.sync.service.UnitSynchronizationService"%>
-<%@page import="com.emc.traceloader.db.entity.Host"%>
-<%@page import="com.emc.traceloader.auth.SessionParameters"%>
+<%@page import="com.emc.traceloader.service.db.DatabaseService"%>
+<%@page import="com.emc.traceloader.service.sync.UnitSynchronizationService"%>
+<%@page import="com.emc.traceloader.service.db.impl.entity.Host"%>
+<%@page import="com.emc.traceloader.session.SessionParameters"%>
+<%@page import="com.emc.traceloader.service.Services"%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -17,15 +18,15 @@
 	</head>
 
     <%
-        String session_id = (String)session.getAttribute(SessionParameters.SESSION_ID_PARAM);
-        String user_id = (String)session.getAttribute(SessionParameters.USER_ID_PARAM);
+        String session_id = SessionParameters.sessionId(session);
+        String user_id = SessionParameters.userId(session);
         if(null == session_id) {
             response.sendRedirect("login.jsp");
         }
         boolean entryAddedSuccess = false;
         boolean entryAddedError = false;
-        DatabaseUtils dbUtils = (DatabaseUtils)pageContext.getServletContext().getAttribute(DatabaseUtils.class.getName());
-        UnitSynchronizationService syncService = (UnitSynchronizationService)pageContext.getServletContext().getAttribute(UnitSynchronizationService.class.getName());
+        DatabaseService dbUtils = Services.databaseUtilsInstance(pageContext.getServletContext());
+        UnitSynchronizationService syncService = Services.unitSynchronizationServiceInstance(pageContext.getServletContext());
         Map req_params = request.getParameterMap();
         if (req_params.size() > 1) {
             Host host = new Host(request.getParameter("ip_address"), request.getParameter("port"));
