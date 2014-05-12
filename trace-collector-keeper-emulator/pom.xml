@@ -25,6 +25,10 @@
             <artifactId>gson</artifactId>
         </dependency>
         <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.emc.traceloader</groupId>
             <artifactId>trace-collector-keeper-api</artifactId>
         </dependency>

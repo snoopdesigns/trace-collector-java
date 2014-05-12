@@ -4,14 +4,12 @@ public class AuthInfo {
 
     private Integer status;
     private String session_id;
-    private String username;
 
     public AuthInfo() {
     }
 
-    public AuthInfo(String session_id, String username) {
+    public AuthInfo(String session_id) {
         this.session_id = session_id;
-        this.username = username;
         this.status = 0;
     }
 
@@ -21,14 +19,6 @@ public class AuthInfo {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getSession_id() {
@@ -44,7 +34,6 @@ public class AuthInfo {
         return "AuthInfo{" +
                 "status=" + status +
                 ", session_id='" + session_id + '\'' +
-                ", username='" + username + '\'' +
                 '}';
     }
 }

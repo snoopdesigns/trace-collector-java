@@ -74,6 +74,28 @@ public class HttpUtils {
         }
     }
 
+    public static String sendKeeperAuthRequest(URL keeperUrl, final String encodedCredentials) {
+        String sessionId = null;
+        try {
+            HttpClient client = getThreadSafeClient();
+            HttpPost post = new HttpPost(keeperUrl.toURI());
+            post.setHeader(new Header() {
+                @Override
+                public String getName() {return "Authorization";}
+                @Override
+                public String getValue() {return "Basic " + encodedCredentials;}
+                    @Override
+                public HeaderElement[] getElements() throws ParseException {return new HeaderElement[0];}
+            });
+            HttpResponse response = client.execute(post);
+            Header header = response.getFirstHeader("Set-Cookie");
+            sessionId = header.getValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sessionId;
+    }
+
     public static String buildURLForUnit(Host host) {
         StringBuilder sb = new StringBuilder();
         sb.append(HTTP_PROTOCOL);
