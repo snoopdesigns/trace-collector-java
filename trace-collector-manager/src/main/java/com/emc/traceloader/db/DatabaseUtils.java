@@ -69,6 +69,7 @@ public class DatabaseUtils {
     }
 
     public Host getHostById(Long id, String userLogin) {
+        System.out.println("Getting host by id: " + id);
         try {
             User user  = (User)em.find(User.class, this.getUserIdByLogin(userLogin));
             List<Host> list = user.getHosts();
@@ -80,6 +81,7 @@ public class DatabaseUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("Retunring null");
         return null;
     }
 

@@ -31,10 +31,13 @@ public class DatabaseFunctionsServlet extends HttpServlet {
                 (UnitSynchronizationService)getServletContext().getAttribute(UnitSynchronizationService.class.getName());
         if(request.getParameter("action") != null) {
             if(request.getParameter("action").equals(DELETE_ACTION)) {
-                dbUtils.deleteHost(Long.valueOf(request.getParameter("id")),
-                        (String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM));
+                if(unitSynchronizationService == null) {
+                    logger.info("FUUUUUUUUUUUUUUUU");
+                }
                 unitSynchronizationService.stopMonitoring(dbUtils.getHostById(Long.valueOf(request.getParameter("id")),
                         (String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM)).getSyncid());
+                dbUtils.deleteHost(Long.valueOf(request.getParameter("id")),
+                        (String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM));
             } else if(request.getParameter("action").equals(SELECT_FUNCTION)) {
                 dbUtils.setHostSelected(Long.valueOf(request.getParameter("id")),
                         (String)request.getSession().getAttribute(SessionParameters.USER_ID_PARAM),
