@@ -2,45 +2,11 @@ package com.emc.traceloader.keeper.api;
 
 public class LogEntity {
 
-    private String op_code;
     private String device_id;
-    private String op_address;
-    private String transfer_length;
+    private String cdb_string;
     private String datetime;
 
     public LogEntity() {
-    }
-
-    public String getTransfer_length() {
-        return transfer_length;
-    }
-
-    public void setTransfer_length(String transfer_length) {
-        this.transfer_length = transfer_length;
-    }
-
-    public String getOp_code() {
-        return op_code;
-    }
-
-    public void setOp_code(String op_code) {
-        this.op_code = op_code;
-    }
-
-    public String getDevice_id() {
-        return device_id;
-    }
-
-    public void setDevice_id(String device_id) {
-        this.device_id = device_id;
-    }
-
-    public String getOp_address() {
-        return op_address;
-    }
-
-    public void setOp_address(String op_address) {
-        this.op_address = op_address;
     }
 
     public String getDatetime() {
@@ -51,14 +17,29 @@ public class LogEntity {
         this.datetime = datetime;
     }
 
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
+    }
+
+    public String getCdb_string() {
+        return cdb_string;
+    }
+
+    public void setCdb_string(String cdb_string) {
+        this.cdb_string = cdb_string;
+    }
+
     @Override
     public String toString() {
         return "LogEntity{" +
-                "op_code='" + op_code + '\'' +
-                ", device_id='" + device_id + '\'' +
-                ", op_address='" + op_address + '\'' +
-                ", transfer_length='" + transfer_length + '\'' +
+                "device_id='" + device_id + '\'' +
+                ", cdb_string='" + cdb_string + '\'' +
                 ", datetime='" + datetime + '\'' +
                 '}';
     }
+
 }

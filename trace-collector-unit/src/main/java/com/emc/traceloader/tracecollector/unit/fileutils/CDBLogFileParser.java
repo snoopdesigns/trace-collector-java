@@ -33,14 +33,9 @@ public class CDBLogFileParser {
         String deviceId = line.substring(line.indexOf("LUNWWN(") + 7, line.length() - 1);
         String cdbString = line.substring(line.indexOf("CDB(") + 4, line.indexOf("LUNWWN") - 2);
         if(cdbString.length() == 20) {  //20x 16hex symbols
-            String op_code = cdbString.substring(0,2);
-            String op_address = cdbString.substring(4,12);
-            String transfer_length = cdbString.substring(14,18);
             result.setDatetime(datetime);
             result.setDevice_id(deviceId);
-            result.setOp_address(op_address);
-            result.setOp_code(op_code);
-            result.setTransfer_length(transfer_length);
+            result.setCdb_string(cdbString);
         }
         return result;
     }
